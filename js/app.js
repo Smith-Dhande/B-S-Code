@@ -1,5 +1,5 @@
-import { selectFolder } from "./filesystem/openFolder";
-
+import { selectFolder } from "./filesystem/openFolder.js";
 
 let openFolderBtn = document.getElementById("open-folder-button");
-openFolderBtn.addEventListener("click", selectFolder());
+
+openFolderBtn.addEventListener("click", selectFolder);
