@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BS Code</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Top Bar -->
+        <header id="top-bar" class="top-bar">
+            <div id="brand-area" class="brand-area">
+                <h1 class="project-title">BS Code</h1>
+            </div>
+
+            <nav id="top-bar-actions" class="top-bar-actions">
+                <button id="open-folder-button" class="top-bar-button" type="button" >Open Folder</button>
+                <button id="save-button" class="top-bar-button" type="button">Save</button>
+                <button id="new-file-button" class="top-bar-button" type="button">New File</button>
+                <button id="new-folder-button" class="top-bar-button" type="button">New Folder</button>
+
+                <label class="model-selector-label" for="model-selector">Model</label>
+                <select id="model-selector" class="model-selector" name="model">
+                    <option value="">Select model</option>
+                </select>
+            </nav>
+        </header>
+
+        <main id="ide-main" class="ide-main">
+            <div id="workspace">
+                <!-- File Explorer -->
+                <aside id="file-explorer" class="file-explorer">
+                <header id="explorer-header" class="explorer-header">
+                    <h2 class="explorer-title">Explorer</h2>
+                    <div class="explorer-actions">
+                        <button id="new-file-button">+</button>
+                        <button id="new-folder-button">📁</button>
+                        <button id="refresh-project-button">↻</button>
+                    </div>
+                </header>
+
+                <section id="project-info" class="project-info">
+                    <h3 id="project-name" class="project-name">No folder opened</h3>
+                </section>
+
+                <section id="file-tree-container" class="file-tree-container">
+                </section>
+                </aside>
+
+                <!-- Editor Section -->
+                <section id="editor-section" class="editor-section">
+                <header id="tabs-container" class="tabs-container">
+                    <div id="tabs-placeholder">
+                        No files open
+                    </div>
+                </header>
+
+                <section id="main-editor-container" class="main-editor-container">
+                    <div id="editor-placeholder">
+                        Open a folder to start coding
+                    </div>
+                </section>
+
+                <section id="split-editor-container" class="split-editor-container" hidden>
+                </section>
+                </section>
+
+                <!-- AI Assistant Panel -->
+                <aside id="ai-assistant-panel" class="ai-assistant-panel">
+                <header id="ai-header" class="ai-header">
+                    <h2 class="ai-title">AI Assistant</h2>
+                    <button id="new-chat-btn">
+                        New Chat
+                    </button>
+                </header>
+
+                <section id="model-information" class="model-information">
+                    <p id="active-model" class="active-model">No model selected</p>
+                </section>
+
+                
+
+                <section id="chat-history" class="chat-history">
+                </section>
+
+                <section id="prompt-input-container" class="prompt-input-container">
+                    <label class="prompt-input-label" for="prompt-input">Prompt</label>
+                    <textarea id="prompt-input" class="prompt-input" name="prompt" rows="3" placeholder="Ask BS Code..."></textarea>
+                    <button id="send-prompt-button" class="send-prompt-button" type="button">Send</button>
+                </section>
+                </aside>
+            </div>
+        </main>
+        <div id="notifications-container">
+        </div>
+        <div id="modal-container"></div>
+
+
+        <!-- Status Bar -->
+        <footer id="status-bar" class="status-bar">
+            <span id="current-file-status" class="status-item current-file-status">No file selected</span>
+            <span id="current-model-status" class="status-item current-model-status">No model selected</span>
+            <span id="save-status" class="status-item save-status">Unsaved</span>
+            <span id="cursor-position" class="status-item cursor-position">Ln 1, Col 1</span>
+        </footer>
+    </div>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
