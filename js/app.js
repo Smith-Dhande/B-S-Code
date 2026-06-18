@@ -3,6 +3,17 @@ import { createEditor } from "./editor/monaco.js";
 import { saveFile } from "./filesystem/saveFile.js";
 import { createFile } from "./explorer/createFile.js";
 import { createFolder } from "./explorer/createFolder.js";
+import { deleteItem } from "./explorer/deleteItem.js";
+
+const deleteButton =
+document.getElementById(
+"delete-button"
+);
+
+deleteButton.addEventListener(
+"click",
+deleteItem
+);
 
 
 const saveButton =

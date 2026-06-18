@@ -1,0 +1,54 @@
+import { state } from "../state.js";
+import {
+getFolderContent
+} from "../filesystem/openFolder.js";
+import {
+renderExplorer
+} from "./renderExplorer.js";
+
+async function deleteItem() {
+
+if (
+    !state.selectedExplorerItem
+) {
+
+    alert(
+        "Select a file or folder"
+    );
+
+    return;
+
+}
+
+const item =
+    state.selectedExplorerItem;
+
+const confirmDelete =
+    confirm(
+        `Delete ${item.name}?`
+    );
+
+if (!confirmDelete)
+    return;
+
+await item.parentHandle
+    .removeEntry(
+        item.name,
+        {
+            recursive: true
+        }
+    );
+
+state.folderStructure =
+    await getFolderContent(
+        state.selectedFolder
+    );
+
+state.selectedExplorerItem =
+    null;
+
+renderExplorer();
+
+}
+
+export { deleteItem };
