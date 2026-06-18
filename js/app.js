@@ -1,6 +1,8 @@
 import { selectFolder } from "./filesystem/openFolder.js";
 import { createEditor } from "./editor/monaco.js";
 import { saveFile } from "./filesystem/saveFile.js";
+import { createFile } from "./explorer/createFile.js";
+import { createFolder } from "./explorer/createFolder.js";
 
 
 const saveButton =
@@ -28,3 +30,13 @@ document.addEventListener("keydown", async (event) => {
     }
 
 });
+
+
+const newFileButton = document.getElementById( "new-file-button");
+
+newFileButton.addEventListener("click",createFile);
+
+
+const newFolderButton = document.getElementById("new-folder-button");
+
+newFolderButton.addEventListener("click", createFolder);

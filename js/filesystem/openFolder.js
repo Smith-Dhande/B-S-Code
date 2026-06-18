@@ -30,4 +30,4 @@ async function getFolderContent(folderHandle) {
     }
     return contents;
 }
-export { selectFolder };
+export { selectFolder, getFolderContent };

@@ -2,10 +2,11 @@ const state = {
     selectedFolder: null,
     folderStructure: [],
     activeFile: null,
-    openTabs: [],
+    selectedExplorerItem: null,
     currentFileContent: "",
+    openTabs: [],
     currentModel: null,
     chatHistory: [],
-    hasUnsavedChanges : false
+    isModified: false
 };
-export{ state } 
+export { state };
