@@ -3,51 +3,71 @@ import { renderExplorer } from "./renderExplorer.js";
 
 async function createFile() {
 
-    const fileName = prompt("File name");
+const fileName =
+    prompt("File name");
 
-    if (!fileName) return;
+if (!fileName) return;
 
-    const targetFolder =
-        state.selectedExplorerItem?.type === "directory"
-            ? state.selectedExplorerItem.handle
-            : state.selectedFolder;
+const targetFolder =
+    state.selectedExplorerItem?.type ===
+    "directory"
+        ? state.selectedExplorerItem.handle
+        : state.selectedFolder;
 
-    const fileHandle =
-        await targetFolder.getFileHandle(
-            fileName,
-            {
-                create: true
-            }
-        );
+const fileHandle =
+    await createFileByName(
+        fileName,
+        targetFolder
+    );
 
-    const newFile = {
-        name: fileName,
-        type: "file",
-        handle: fileHandle
-    };
+const newFile = {
+    name: fileName,
+    type: "file",
+    handle: fileHandle
+};
 
-    if (
-        state.selectedExplorerItem?.type ===
-        "directory"
-    ) {
+if (
+    state.selectedExplorerItem?.type ===
+    "directory"
+) {
 
-        state.selectedExplorerItem
-            .children
-            .push(newFile);
+    state.selectedExplorerItem
+        .children
+        .push(newFile);
 
-        state.selectedExplorerItem
-            .isExpanded = true;
+    state.selectedExplorerItem
+        .isExpanded = true;
 
-    } else {
+} else {
 
-        state.folderStructure.push(
-            newFile
-        );
-
-    }
-
-    renderExplorer();
+    state.folderStructure.push(
+        newFile
+    );
 
 }
 
-export { createFile };
+renderExplorer();
+
+}
+
+async function createFileByName(
+fileName,
+targetFolder
+) {
+
+const fileHandle =
+    await targetFolder.getFileHandle(
+        fileName,
+        {
+            create: true
+        }
+    );
+
+return fileHandle;
+
+}
+
+export {
+createFile,
+createFileByName
+};

@@ -1,7 +1,14 @@
 import {
-generateResponse
-} from "./ollama.js";
+    createPlan
+} from "./agent.js";
 
+import {
+    executePlan
+} from "./agentExecutor.js";
+
+import {
+    generateResponse
+} from "./ollama.js";
 
 function renderMessage(
 sender,
@@ -49,72 +56,117 @@ return messageElement;
 
 async function handleChat() {
 
-
-const promptInput =
-    document.getElementById(
-        "prompt-input"
-    );
-
-const modelSelector =
-    document.getElementById(
-        "model-selector"
-    );
-
-const prompt =
-    promptInput.value.trim();
-
-const model =
-    modelSelector.value;
-
-if (!prompt) return;
-
-renderMessage(
-    "You",
-    prompt
-);
-
-promptInput.value = "";
-
-const loadingMessage =
-    renderMessage(
-        "AI",
-        "⏳ Thinking..."
-    );
-
-try {
-
-    const response =
-        await generateResponse(
-            model,
-            prompt
+    const promptInput =
+        document.getElementById(
+            "prompt-input"
         );
 
-    loadingMessage.innerHTML = `
-        <div class="message-header">
-            AI
-        </div>
+    const modelSelector =
+        document.getElementById(
+            "model-selector"
+        );
 
-        <div class="message-content">
-            ${
-                response
-            }
-        </div>
-    `;
+    const prompt =
+        promptInput.value.trim();
 
-} catch (error) {
+    const model =
+        modelSelector.value;
 
-    loadingMessage.innerHTML = `
-        <div class="message-header">
-            AI
-        </div>
+    if (!prompt) return;
 
-        <div class="message-content">
-            Error: ${error.message}
-        </div>
-    `;
+    renderMessage(
+        "You",
+        prompt
+    );
 
-}
+    promptInput.value = "";
 
+    const loadingMessage =
+        renderMessage(
+            "AI",
+            "⏳ Thinking..."
+        );
+
+    try {
+
+        const isAgentRequest =
+
+            prompt.toLowerCase()
+                .includes(
+                    "create file"
+                ) ||
+
+            prompt.toLowerCase()
+                .includes(
+                    "create a file"
+                );
+
+        if (
+            isAgentRequest
+        ) {
+
+            const plan =
+                await createPlan(
+                    prompt,
+                    model
+                );
+
+            console.log(
+                "Agent Plan:",
+                plan
+            );
+
+            await executePlan(
+                plan
+            );
+
+            loadingMessage.innerHTML = `
+                <div class="message-header">
+                    AI
+                </div>
+
+                <div class="message-content">
+                    ✅ Task completed successfully
+                </div>
+            `;
+
+            return;
+        }
+
+        const response =
+            await generateResponse(
+                model,
+                prompt
+            );
+
+        loadingMessage.innerHTML = `
+            <div class="message-header">
+                AI
+            </div>
+
+            <div class="message-content">
+                ${response}
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+        loadingMessage.innerHTML = `
+            <div class="message-header">
+                AI
+            </div>
+
+            <div class="message-content">
+                Error:
+                ${error.message}
+            </div>
+        `;
+
+    }
 
 }
 

@@ -7,14 +7,9 @@ async function selectFolder() {
 const selectedOpenFolder =
     await window.showDirectoryPicker();
 
-state.selectedFolder =
-    selectedOpenFolder;
+state.selectedFolder = selectedOpenFolder;
 
-state.folderStructure =
-    await getFolderContent(
-        selectedOpenFolder
-    );
-
+state.folderStructure = await getFolderContent(selectedOpenFolder);
 renderExplorer();
 
 
@@ -64,15 +59,11 @@ for await (
 
             handle,
 
-            parentHandle:
-                folderHandle,
+            parentHandle:folderHandle,
 
             isExpanded: false,
 
-            children:
-                await getFolderContent(
-                    handle
-                )
+            children:await getFolderContent(handle)
 
         });
 
@@ -85,7 +76,4 @@ return contents;
 
 }
 
-export {
-selectFolder,
-getFolderContent
-};
+export {selectFolder,getFolderContent};
