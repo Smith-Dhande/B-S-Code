@@ -4,6 +4,12 @@ import { saveFile } from "./filesystem/saveFile.js";
 import { createFile } from "./explorer/createFile.js";
 import { createFolder } from "./explorer/createFolder.js";
 import { deleteItem } from "./explorer/deleteItem.js";
+import { loadModels } from "./ai/models.js";
+import { initializeChat } from "./ai/chat.js";
+
+
+loadModels();
+initializeChat();
 
 const deleteButton =
 document.getElementById(

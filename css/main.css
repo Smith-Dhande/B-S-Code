@@ -347,3 +347,93 @@ font-size:12px;
     white-space: pre;
     overflow: auto;
 }
+.ai-assistant-panel {
+
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+
+    height: 100%;
+
+    overflow: hidden;
+
+}
+.chat-history {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    min-height: 0;
+
+    padding: 1rem;
+
+}
+.prompt-input-container {
+
+    flex-shrink: 0;
+
+    padding: 1rem;
+
+    border-top: 1px solid #333;
+
+}
+.user-message {
+
+
+margin: 12px;
+padding: 12px;
+
+background: #0e639c;
+
+border-radius: 10px;
+
+
+}
+
+.ai-message {
+
+
+margin: 12px;
+padding: 12px;
+
+background: #252526;
+
+border-radius: 10px;
+
+
+}
+
+.message-header {
+
+
+font-weight: 600;
+
+margin-bottom: 8px;
+
+
+}
+
+.message-content pre {
+
+
+padding: 12px;
+
+overflow-x: auto;
+
+border-radius: 8px;
+
+background: #1e1e1e;
+
+
+}
+
+.message-content code {
+
+
+font-family:
+    Consolas,
+    monospace;
+
+
+}
