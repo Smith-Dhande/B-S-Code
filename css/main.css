@@ -352,9 +352,7 @@ font-size:12px;
     display: flex;
     justify-content: left;
     flex-direction: column;
-
     height: 100%;
-
     overflow: hidden;
 
 }
