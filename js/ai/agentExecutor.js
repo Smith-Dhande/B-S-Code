@@ -1,108 +1,145 @@
-import { state }from "../state.js";
-import {createFileByName}from "../explorer/createFile.js";
-import {writeFile}from "../filesystem/writeFile.js";
-import {readFile}from "../filesystem/readFile.js";
-import {getFolderContent}from "../filesystem/openFolder.js";
-import {renderExplorer}from "../explorer/renderExplorer.js";
-import {openFile}from "../editor/openFile.js";
+import { state }
+from "../state.js";
+
+import {
+    createFileByName
+}
+from "../explorer/createFile.js";
+
+import {
+    writeFile
+}
+from "../filesystem/writeFile.js";
+
+import {
+    readFile
+}
+from "../filesystem/readFile.js";
+
+import {
+    getFolderContent
+}
+from "../filesystem/openFolder.js";
+
+import {
+    renderExplorer
+}
+from "../explorer/renderExplorer.js";
+
+import {
+    openFile
+}
+from "../editor/openFile.js";
+
+import {
+    generateFileCode
+}
+from "./codeGenerator.js";
 
 async function executePlan(
-plan
+    plan
 ) {
 
-for (
-    const action
-    of plan.actions
-) {
-
-    console.log(
-        "Executing:",
-        action
-    );
-
-    switch (
-        action.tool
+    for (
+        const action
+        of plan.actions
     ) {
 
-        case "createFile": {
+        console.log(
+            "Executing:",
+            action
+        );
 
-            await createFileByName(
-                action.filename,
-                state.selectedFolder
-            );
+        switch (
+            action.tool
+        ) {
 
-            break;
-        }
+            case "createFile": {
 
-        case "writeFile": {
-
-            const fileHandle =
-                await state.selectedFolder
-                    .getFileHandle(
-                        action.filename
-                    );
-
-            await writeFile(
-                fileHandle,
-                action.content
-            );
-
-            if (
-                state.activeFile &&
-                state.activeFile.name ===
-                action.filename
-            ) {
-
-                await openFile(
-                    state.activeFile
+                await createFileByName(
+                    action.filename,
+                    state.selectedFolder
                 );
 
+                break;
             }
 
-            break;
-        }
+            case "generateCode": {
 
-        case "readFile": {
+                const fileHandle =
+                    await state.selectedFolder
+                        .getFileHandle(
+                            action.filename
+                        );
 
-            const fileHandle =
-                await state.selectedFolder
-                    .getFileHandle(
-                        action.filename
+                const generatedCode =
+                    await generateFileCode(
+                        state.currentModel,
+                        action.filename,
+                        action.description
                     );
 
-            const content =
-                await readFile(
-                    fileHandle
+                await writeFile(
+                    fileHandle,
+                    generatedCode
                 );
 
-            console.log(
-                "FILE CONTENT:",
-                content
-            );
+                if (
+                    state.activeFile &&
+                    state.activeFile.name ===
+                    action.filename
+                ) {
 
-            return content;
+                    await openFile(
+                        state.activeFile
+                    );
+
+                }
+
+                break;
+            }
+
+            case "readFile": {
+
+                const fileHandle =
+                    await state.selectedFolder
+                        .getFileHandle(
+                            action.filename
+                        );
+
+                const content =
+                    await readFile(
+                        fileHandle
+                    );
+
+                console.log(
+                    "FILE CONTENT:",
+                    content
+                );
+
+                return content;
+            }
+
+            default:
+
+                console.warn(
+                    "Unknown tool:",
+                    action.tool
+                );
+
         }
-
-        default:
-
-            console.warn(
-                "Unknown tool:",
-                action.tool
-            );
 
     }
 
-}
+    state.folderStructure =
+        await getFolderContent(
+            state.selectedFolder
+        );
 
-state.folderStructure =
-    await getFolderContent(
-        state.selectedFolder
-    );
-
-renderExplorer();
+    renderExplorer();
 
 }
 
 export {
-executePlan
+    executePlan
 };

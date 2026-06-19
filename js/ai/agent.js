@@ -1,110 +1,148 @@
 import {
-generateResponse
+    generateResponse
 } from "./ollama.js";
 
 async function createPlan(
-userPrompt,
-model
+    userPrompt,
+    model
 ) {
 
+    const systemPrompt = `
 
-const systemPrompt = `
-
-
-You are an IDE agent.
+You are an IDE Agent.
 
 Available tools:
 
 1. createFile(filename)
-2. writeFile(filename, content)
-3. readFile(filename)
+2. readFile(filename)
+3. generateCode(filename, description)
 
-Respond ONLY in JSON.
+IMPORTANT:
+
+- Never generate source code inside JSON.
+- Never use writeFile.
+- Only create a plan.
+- If multiple files are required, generate multiple actions.
+- Return valid JSON only.
+- Do not use markdown.
+- Do not use code fences.
+- Do not explain anything.
 
 Example 1:
 
 {
-"actions": [
-{
-"tool": "createFile",
-"filename": "HelloWorld.java"
-}
-]
+    "actions": [
+        {
+            "tool": "createFile",
+            "filename": "HelloWorld.java"
+        },
+        {
+            "tool": "generateCode",
+            "filename": "HelloWorld.java",
+            "description": "Java hello world program"
+        }
+    ]
 }
 
 Example 2:
 
 {
-"actions": [
-{
-"tool": "readFile",
-"filename": "Test.java"
-}
-]
+    "actions": [
+        {
+            "tool": "readFile",
+            "filename": "index.html"
+        }
+    ]
 }
 
 Example 3:
 
 {
-"actions": [
-{
-"tool": "createFile",
-"filename": "HelloWorld.java"
-},
-{
-"tool": "writeFile",
-"filename": "HelloWorld.java",
-"content": "public class HelloWorld {}"
-}
-]
+    "actions": [
+        {
+            "tool": "createFile",
+            "filename": "index.html"
+        },
+        {
+            "tool": "generateCode",
+            "filename": "index.html",
+            "description": "HTML for calculator application"
+        },
+        {
+            "tool": "createFile",
+            "filename": "style.css"
+        },
+        {
+            "tool": "generateCode",
+            "filename": "style.css",
+            "description": "CSS styling for calculator application"
+        },
+        {
+            "tool": "createFile",
+            "filename": "script.js"
+        },
+        {
+            "tool": "generateCode",
+            "filename": "script.js",
+            "description": "JavaScript logic for calculator application"
+        }
+    ]
 }
 
-IMPORTANT:
-Do not use markdown.
-Do not use code fences.
-Return raw JSON only.
 `;
 
-const response =
-    await generateResponse(
-        model,
-        `${systemPrompt}
-
+    const response =
+        await generateResponse(
+            model,
+            `${systemPrompt}
 
 User Request:
 ${userPrompt}`
-);
+        );
 
+    console.log(
+        "RAW RESPONSE:",
+        response
+    );
 
-console.log(
-    "RAW RESPONSE:",
-    response
-);
+    const cleanResponse =
+        response
+            .replace(
+                /```json/g,
+                ""
+            )
+            .replace(
+                /```/g,
+                ""
+            )
+            .trim();
 
-const cleanResponse =
-    response
-        .replace(
-            /```json/g,
-            ""
-        )
-        .replace(
-            /```/g,
-            ""
-        )
-        .trim();
+    console.log(
+        "CLEAN RESPONSE:",
+        cleanResponse
+    );
 
-console.log(
-    "CLEAN RESPONSE:",
-    cleanResponse
-);
+    try {
 
-return JSON.parse(
-    cleanResponse
-);
+        return JSON.parse(
+            cleanResponse
+        );
 
+    } catch (error) {
+
+        console.error(
+            "INVALID JSON:",
+            cleanResponse
+        );
+
+        throw new Error(
+            "Model generated invalid JSON."
+        );
+
+    }
 
 }
 
 export {
-createPlan
+    createPlan
 };

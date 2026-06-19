@@ -6,6 +6,9 @@ async function selectFolder() {
 
 const selectedOpenFolder =
     await window.showDirectoryPicker();
+    await selectedOpenFolder.requestPermission({
+    mode: "readwrite"
+});
 
 state.selectedFolder = selectedOpenFolder;
 

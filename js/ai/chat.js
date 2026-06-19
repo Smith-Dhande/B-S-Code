@@ -10,6 +10,10 @@ import {
 generateResponse
 } from "./ollama.js";
 
+import {
+    state
+}
+from "../state.js";
 function renderMessage(
 sender,
 message
@@ -72,7 +76,8 @@ const prompt =
 
 const model =
     modelSelector.value;
-
+state.currentModel =
+    model;
 if (!prompt) return;
 
 renderMessage(
