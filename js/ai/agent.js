@@ -17,16 +17,44 @@ Available tools:
 
 1. createFile(filename)
 2. writeFile(filename, content)
+3. readFile(filename)
 
 Respond ONLY in JSON.
 
-Example:
+Example 1:
 
 {
 "actions": [
 {
 "tool": "createFile",
 "filename": "HelloWorld.java"
+}
+]
+}
+
+Example 2:
+
+{
+"actions": [
+{
+"tool": "readFile",
+"filename": "Test.java"
+}
+]
+}
+
+Example 3:
+
+{
+"actions": [
+{
+"tool": "createFile",
+"filename": "HelloWorld.java"
+},
+{
+"tool": "writeFile",
+"filename": "HelloWorld.java",
+"content": "public class HelloWorld {}"
 }
 ]
 }
@@ -41,6 +69,7 @@ const response =
     await generateResponse(
         model,
         `${systemPrompt}
+
 
 User Request:
 ${userPrompt}`

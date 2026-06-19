@@ -1,13 +1,13 @@
 import {
-    createPlan
+createPlan
 } from "./agent.js";
 
 import {
-    executePlan
+executePlan
 } from "./agentExecutor.js";
 
 import {
-    generateResponse
+generateResponse
 } from "./ollama.js";
 
 function renderMessage(
@@ -56,69 +56,95 @@ return messageElement;
 
 async function handleChat() {
 
-    const promptInput =
-        document.getElementById(
-            "prompt-input"
-        );
 
-    const modelSelector =
-        document.getElementById(
-            "model-selector"
-        );
-
-    const prompt =
-        promptInput.value.trim();
-
-    const model =
-        modelSelector.value;
-
-    if (!prompt) return;
-
-    renderMessage(
-        "You",
-        prompt
+const promptInput =
+    document.getElementById(
+        "prompt-input"
     );
 
-    promptInput.value = "";
+const modelSelector =
+    document.getElementById(
+        "model-selector"
+    );
 
-    const loadingMessage =
-        renderMessage(
-            "AI",
-            "⏳ Thinking..."
+const prompt =
+    promptInput.value.trim();
+
+const model =
+    modelSelector.value;
+
+if (!prompt) return;
+
+renderMessage(
+    "You",
+    prompt
+);
+
+promptInput.value = "";
+
+const loadingMessage =
+    renderMessage(
+        "AI",
+        "⏳ Thinking..."
+    );
+
+try {
+
+    const lowerPrompt =
+        prompt.toLowerCase();
+
+    const isAgentRequest =
+
+        lowerPrompt.includes(
+            "create"
+        ) ||
+
+        lowerPrompt.includes(
+            "read"
+        ) ||
+
+        lowerPrompt.includes(
+            "write"
+        ) ||
+
+        lowerPrompt.includes(
+            "fix"
+        ) ||
+
+        lowerPrompt.includes(
+            "update"
+        ) ||
+
+        lowerPrompt.includes(
+            "modify"
         );
 
-    try {
+    console.log(
+        "Agent Mode:",
+        isAgentRequest
+    );
 
-        const isAgentRequest =
+    if (
+        isAgentRequest
+    ) {
 
-            prompt.toLowerCase()
-                .includes(
-                    "create file"
-                ) ||
-
-            prompt.toLowerCase()
-                .includes(
-                    "create a file"
-                );
-
-        if (
-            isAgentRequest
-        ) {
-
-            const plan =
-                await createPlan(
-                    prompt,
-                    model
-                );
-
-            console.log(
-                "Agent Plan:",
-                plan
+        const plan =
+            await createPlan(
+                prompt,
+                model
             );
 
+        console.log(
+            "Agent Plan:",
+            plan
+        );
+
+        const result =
             await executePlan(
                 plan
             );
+
+        if (result) {
 
             loadingMessage.innerHTML = `
                 <div class="message-header">
@@ -126,52 +152,65 @@ async function handleChat() {
                 </div>
 
                 <div class="message-content">
-                    ✅ Task completed successfully
+                    ${result}
                 </div>
             `;
 
             return;
         }
 
-        const response =
-            await generateResponse(
-                model,
-                prompt
-            );
-
         loadingMessage.innerHTML = `
             <div class="message-header">
                 AI
             </div>
 
             <div class="message-content">
-                ${response}
+                ✅ Task completed successfully
             </div>
         `;
 
-    } catch (error) {
+        return;
+    }
 
-        console.error(
-            error
+    const response =
+        await generateResponse(
+            model,
+            prompt
         );
 
-        loadingMessage.innerHTML = `
-            <div class="message-header">
-                AI
-            </div>
+    loadingMessage.innerHTML = `
+        <div class="message-header">
+            AI
+        </div>
 
-            <div class="message-content">
-                Error:
-                ${error.message}
-            </div>
-        `;
+        <div class="message-content">
+            ${response}
+        </div>
+    `;
 
-    }
+} catch (error) {
+
+    console.error(
+        error
+    );
+
+    loadingMessage.innerHTML = `
+        <div class="message-header">
+            AI
+        </div>
+
+        <div class="message-content">
+            Error:
+            ${error.message}
+        </div>
+    `;
+
+}
+
 
 }
 
 function initializeChat() {
-
 
 const sendButton =
     document.getElementById(
