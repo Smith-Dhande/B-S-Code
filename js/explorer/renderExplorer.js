@@ -1,8 +1,19 @@
 import { state }
 from "../state.js";
 
+import {
+    getFolderContent
+}
+from "../filesystem/openFolder.js";
+
 import { openFile }
 from "../editor/openFile.js";
+
+import { createFileByName }
+from "./createFile.js";
+
+import { createFolderByName }
+from "./createFolder.js";
 
 function renderExplorer() {
 
@@ -74,6 +85,10 @@ function renderExplorer() {
         state.folderStructure,
         fileTreeContainer,
         0
+    );
+
+    renderInlineCreationInput(
+        fileTreeContainer
     );
 
 }
@@ -153,8 +168,7 @@ function renderItems(
             );
 
             if (
-                item.type ===
-                    "directory" &&
+                item.type === "directory" &&
                 item.isExpanded &&
                 item.children &&
                 item.children.length > 0
@@ -167,6 +181,153 @@ function renderItems(
                 );
 
             }
+
+        }
+    );
+
+}
+
+function renderInlineCreationInput(
+    container
+) {
+
+    if (
+        !state.isCreatingFile &&
+        !state.isCreatingFolder
+    ) {
+        return;
+    }
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+    wrapper.classList.add(
+        "explorer-item"
+    );
+
+    const icon =
+        state.isCreatingFolder
+            ? "📁"
+            : "📄";
+
+    wrapper.innerHTML = `
+        <span>${icon}</span>
+        <input
+            type="text"
+            id="explorer-create-input"
+            placeholder="${
+                state.isCreatingFolder
+                    ? "Folder name"
+                    : "File name"
+            }"
+        >
+    `;
+
+    container.appendChild(
+        wrapper
+    );
+
+    const input =
+        wrapper.querySelector(
+            "input"
+        );
+
+    input.focus();
+
+    input.addEventListener(
+        "keydown",
+        async (event) => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                state.isCreatingFile =
+                    false;
+
+                state.isCreatingFolder =
+                    false;
+
+                renderExplorer();
+
+                return;
+
+            }
+
+            if (
+                event.key !== "Enter"
+            ) {
+                return;
+            }
+
+            const name =
+                input.value.trim();
+
+            if (!name) {
+                return;
+            }
+
+            try {
+
+                if (
+                    state.isCreatingFile
+                ) {
+
+                    await createFileByName(
+                        name,
+                        state.selectedFolder
+                    );
+
+                }
+
+                if (
+                    state.isCreatingFolder
+                ) {
+
+                    await createFolderByName(
+                        name,
+                        state.selectedFolder
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+
+            }
+
+            state.isCreatingFile =
+                false;
+
+            state.isCreatingFolder =
+                false;
+
+            state.folderStructure =
+                await getFolderContent(
+                    state.selectedFolder
+                );
+
+            renderExplorer();
+
+        }
+    );
+
+    input.addEventListener(
+        "blur",
+        () => {
+
+            state.isCreatingFile =
+                false;
+
+            state.isCreatingFolder =
+                false;
+
+            renderExplorer();
 
         }
     );

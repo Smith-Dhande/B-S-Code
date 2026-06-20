@@ -1,76 +1,50 @@
 import { state } from "../state.js";
-import { renderExplorer } from "./renderExplorer.js";
-import { updateUI } from "../ui/updateUI.js";
+
+import { renderExplorer }
+from "./renderExplorer.js";
 
 async function createFile() {
 
-const fileName =
-    prompt("File name");
-    updateUI()
+    if (
+        !state.selectedFolder
+    ) {
 
-if (!fileName) return;
+        alert(
+            "Open a folder first"
+        );
 
-const targetFolder =
-    state.selectedExplorerItem?.type ===
-    "directory"
-        ? state.selectedExplorerItem.handle
-        : state.selectedFolder;
+        return;
 
-const fileHandle =
-    await createFileByName(
-        fileName,
-        targetFolder
-    );
+    }
 
-const newFile = {
-    name: fileName,
-    type: "file",
-    handle: fileHandle
-};
+    state.isCreatingFolder =
+        false;
 
-if (
-    state.selectedExplorerItem?.type ===
-    "directory"
-) {
+    state.isCreatingFile =
+        true;
 
-    state.selectedExplorerItem
-        .children
-        .push(newFile);
+    renderExplorer();
 
-    state.selectedExplorerItem
-        .isExpanded = true;
-
-} else {
-
-    state.folderStructure.push(
-        newFile
-    );
-
-}
-
-renderExplorer();
-updateUI()
 }
 
 async function createFileByName(
-fileName,
-targetFolder
+    fileName,
+    targetFolder
 ) {
 
-const fileHandle =
-    await targetFolder.getFileHandle(
-        fileName,
-        {
-            create: true
-        }
-    );
-    updateUI()
+    const fileHandle =
+        await targetFolder.getFileHandle(
+            fileName,
+            {
+                create: true
+            }
+        );
 
-return fileHandle;
+    return fileHandle;
 
 }
 
 export {
-createFile,
-createFileByName
+    createFile,
+    createFileByName
 };

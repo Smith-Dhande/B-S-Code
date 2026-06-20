@@ -1,52 +1,27 @@
 import { state } from "../state.js";
-import { renderExplorer } from "./renderExplorer.js";
+
+import { renderExplorer }
+from "./renderExplorer.js";
 
 async function createFolder() {
 
-    const folderName =
-        prompt("Folder name");
-
-    if (!folderName) return;
-
-    const targetFolder =
-        state.selectedExplorerItem?.type ===
-        "directory"
-            ? state.selectedExplorerItem.handle
-            : state.selectedFolder;
-
-    const folderHandle =
-        await createFolderByName(
-            folderName,
-            targetFolder
-        );
-
-    const newFolder = {
-        name: folderName,
-        type: "directory",
-        handle: folderHandle,
-        isExpanded: false,
-        children: []
-    };
-
     if (
-        state.selectedExplorerItem?.type ===
-        "directory"
+        !state.selectedFolder
     ) {
 
-        state.selectedExplorerItem
-            .children
-            .push(newFolder);
-
-        state.selectedExplorerItem
-            .isExpanded = true;
-
-    } else {
-
-        state.folderStructure.push(
-            newFolder
+        alert(
+            "Open a folder first"
         );
 
+        return;
+
     }
+
+    state.isCreatingFile =
+        false;
+
+    state.isCreatingFolder =
+        true;
 
     renderExplorer();
 
@@ -57,13 +32,15 @@ async function createFolderByName(
     targetFolder
 ) {
 
-    return await targetFolder
-        .getDirectoryHandle(
+    const folderHandle =
+        await targetFolder.getDirectoryHandle(
             folderName,
             {
                 create: true
             }
         );
+
+    return folderHandle;
 
 }
 
