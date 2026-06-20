@@ -1,157 +1,228 @@
 import {
-createPlan
-} from "./agent.js";
+    createPlan
+}
+from "./agent.js";
 
 import {
-executePlan
-} from "./agentExecutor.js";
+    executePlan
+}
+from "./agentExecutor.js";
 
 import {
-generateResponse
-} from "./ollama.js";
+    generateResponse
+}
+from "./ollama.js";
 
 import {
     state
 }
 from "../state.js";
-import { updateUI } from "../ui/updateUI.js";
+
+import {
+    updateUI
+}
+from "../ui/updateUI.js";
+
+function saveChatHistory() {
+
+    sessionStorage.setItem(
+        "chatHistory",
+        JSON.stringify(
+            state.chatHistory
+        )
+    );
+
+}
+
 function renderMessage(
-sender,
-message
+    sender,
+    message,
+    save = true
 ) {
 
+    const chatHistory =
+        document.getElementById(
+            "chat-history"
+        );
 
-const chatHistory =
-    document.getElementById(
-        "chat-history"
+    const messageElement =
+        document.createElement(
+            "div"
+        );
+
+    messageElement.classList.add(
+        sender === "You"
+            ? "user-message"
+            : "ai-message"
     );
 
-const messageElement =
-    document.createElement(
-        "div"
+    messageElement.innerHTML = `
+        <div class="message-header">
+            ${sender}
+        </div>
+
+        <div class="message-content">
+            ${message}
+        </div>
+    `;
+
+    chatHistory.appendChild(
+        messageElement
     );
 
-messageElement.classList.add(
-    sender === "You"
-        ? "user-message"
-        : "ai-message"
-);
+    chatHistory.scrollTop =
+        chatHistory.scrollHeight;
 
-messageElement.innerHTML = `
-    <div class="message-header">
-        ${sender}
-    </div>
+    if (save) {
 
-    <div class="message-content">
-        ${message}
-    </div>
-`;
+        state.chatHistory.push({
+            sender,
+            message
+        });
 
-chatHistory.appendChild(
-    messageElement
-);
+        saveChatHistory();
 
-chatHistory.scrollTop =
-    chatHistory.scrollHeight;
+    }
 
-return messageElement;
+    return messageElement;
 
+}
+
+function restoreChatHistory() {
+
+    const storedHistory =
+        JSON.parse(
+            sessionStorage.getItem(
+                "chatHistory"
+            )
+        ) || [];
+
+    state.chatHistory =
+        storedHistory;
+
+    storedHistory.forEach(
+        (chat) => {
+
+            renderMessage(
+                chat.sender,
+                chat.message,
+                false
+            );
+
+        }
+    );
 
 }
 
 async function handleChat() {
 
- 
-
-const promptInput =
-    document.getElementById(
-        "prompt-input"
-    );
-
-const modelSelector =
-    document.getElementById(
-        "model-selector"
-    );
-
-const prompt =
-    promptInput.value.trim();
-
-const model =
-    modelSelector.value;
-state.currentModel =
-    model;
-if (!prompt) return;
-
-renderMessage(
-    "You",
-    prompt
-);
-
-promptInput.value = "";
-
-const loadingMessage =
-    renderMessage(
-        "AI",
-        "⏳ Thinking..."
-    );
-
-try {
-
-    const lowerPrompt =
-        prompt.toLowerCase();
-
-    const isAgentRequest =
-
-        lowerPrompt.includes(
-            "create"
-        ) ||
-
-        lowerPrompt.includes(
-            "read"
-        ) ||
-
-        lowerPrompt.includes(
-            "write"
-        ) ||
-
-        lowerPrompt.includes(
-            "fix"
-        ) ||
-
-        lowerPrompt.includes(
-            "update"
-        ) ||
-
-        lowerPrompt.includes(
-            "modify"
+    const promptInput =
+        document.getElementById(
+            "prompt-input"
         );
 
-    console.log(
-        "Agent Mode:",
-        isAgentRequest
+    const modelSelector =
+        document.getElementById(
+            "model-selector"
+        );
+
+    const prompt =
+        promptInput.value.trim();
+
+    const model =
+        modelSelector.value;
+
+    if (!prompt)
+        return;
+
+    state.currentModel =
+        model;
+
+    sessionStorage.setItem(
+        "currentModel",
+        model
     );
 
-    if (
-        isAgentRequest
-    ) {
+    updateUI();
 
-        const plan =
-            await createPlan(
-                prompt,
-                model
+    renderMessage(
+        "You",
+        prompt
+    );
+
+    promptInput.value = "";
+
+    const loadingMessage =
+        renderMessage(
+            "AI",
+            "⏳ Thinking...",
+            false
+        );
+
+    try {
+
+        const lowerPrompt =
+            prompt.toLowerCase();
+
+        const isAgentRequest =
+
+            lowerPrompt.includes(
+                "create"
+            ) ||
+
+            lowerPrompt.includes(
+                "read"
+            ) ||
+
+            lowerPrompt.includes(
+                "write"
+            ) ||
+
+            lowerPrompt.includes(
+                "fix"
+            ) ||
+
+            lowerPrompt.includes(
+                "update"
+            ) ||
+
+            lowerPrompt.includes(
+                "modify"
+            ) ||
+
+            lowerPrompt.includes(
+                "delete"
             );
 
         console.log(
-            "Agent Plan:",
-            plan
+            "Agent Mode:",
+            isAgentRequest
         );
 
-        const result =
-            await executePlan(
+        if (
+            isAgentRequest
+        ) {
+
+            const plan =
+                await createPlan(
+                    prompt,
+                    model
+                );
+
+            console.log(
+                "Agent Plan:",
                 plan
             );
 
-        if (result) {
+            const result =
+                await executePlan(
+                    plan
+                );
+
+            let finalMessage =
+                result
+                    ? result
+                    : "✅ Task completed successfully";
 
             loadingMessage.innerHTML = `
                 <div class="message-header">
@@ -159,12 +230,26 @@ try {
                 </div>
 
                 <div class="message-content">
-                    ${result}
+                    ${finalMessage}
                 </div>
             `;
 
+            state.chatHistory.push({
+                sender: "AI",
+                message: finalMessage
+            });
+
+            saveChatHistory();
+
             return;
+
         }
+
+        const response =
+            await generateResponse(
+                model,
+                prompt
+            );
 
         loadingMessage.innerHTML = `
             <div class="message-header">
@@ -172,66 +257,77 @@ try {
             </div>
 
             <div class="message-content">
-                ✅ Task completed successfully
+                ${response}
             </div>
         `;
 
-        return;
-    }
+        state.chatHistory.push({
+            sender: "AI",
+            message: response
+        });
 
-    const response =
-        await generateResponse(
-            model,
-            prompt
+        saveChatHistory();
+
+    } catch (error) {
+
+        console.error(
+            error
         );
 
-    loadingMessage.innerHTML = `
-        <div class="message-header">
-            AI
-        </div>
+        loadingMessage.innerHTML = `
+            <div class="message-header">
+                AI
+            </div>
 
-        <div class="message-content">
-            ${response}
-        </div>
-    `;
+            <div class="message-content">
+                Error:
+                ${error.message}
+            </div>
+        `;
 
-} catch (error) {
+        state.chatHistory.push({
+            sender: "AI",
+            message: `Error: ${error.message}`
+        });
 
-    console.error(
-        error
-    );
+        saveChatHistory();
 
-    loadingMessage.innerHTML = `
-        <div class="message-header">
-            AI
-        </div>
+    }
 
-        <div class="message-content">
-            Error:
-            ${error.message}
-        </div>
-    `;
-
-}
-updateUI()
+    updateUI();
 
 }
 
 function initializeChat() {
 
-const sendButton =
-    document.getElementById(
-        "send-prompt-button"
+    const sendButton =
+        document.getElementById(
+            "send-prompt-button"
+        );
+
+    sendButton.addEventListener(
+        "click",
+        handleChat
     );
 
-sendButton.addEventListener(
-    "click",
-    handleChat
-);
-updateUI();
+    const savedModel =
+        sessionStorage.getItem(
+            "currentModel"
+        );
+
+    if (savedModel) {
+
+        state.currentModel =
+            savedModel;
+
+    }
+
+    restoreChatHistory();
+
+    updateUI();
 
 }
 
 export {
-initializeChat
+    initializeChat
 };

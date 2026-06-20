@@ -1,17 +1,39 @@
-
 import { state }
 from "../state.js";
 
 function updateUI() {
-    console.log("updateUI called");
-console.log("Current Model:", state.currentModel);
+
+    const savedProjectName =
+        sessionStorage.getItem(
+            "projectName"
+        );
+
+    const savedModel =
+        sessionStorage.getItem(
+            "currentModel"
+        );
+
+    const savedActiveFile =
+        sessionStorage.getItem(
+            "activeFile"
+        );
+
+    const savedModified =
+        sessionStorage.getItem(
+            "isModified"
+        );
+
     document.getElementById(
         "project-name"
     ).textContent =
 
         state.selectedFolder
             ? state.selectedFolder.name
-            : "No folder opened";
+            : (
+                savedProjectName
+                    ? `${savedProjectName} (reopen folder)`
+                    : "No folder opened"
+            );
 
     document.getElementById(
         "active-model"
@@ -19,7 +41,10 @@ console.log("Current Model:", state.currentModel);
 
         state.currentModel
             ? state.currentModel
-            : "No model selected";
+            : (
+                savedModel ||
+                "No model selected"
+            );
 
     document.getElementById(
         "current-model-status"
@@ -27,7 +52,10 @@ console.log("Current Model:", state.currentModel);
 
         state.currentModel
             ? state.currentModel
-            : "AI Offline";
+            : (
+                savedModel ||
+                "AI Offline"
+            );
 
     document.getElementById(
         "current-file-status"
@@ -35,13 +63,17 @@ console.log("Current Model:", state.currentModel);
 
         state.activeFile
             ? state.activeFile.name
-            : "No file selected";
+            : (
+                savedActiveFile
+                    ? `${savedActiveFile} (closed)`
+                    : "No file selected"
+            );
 
     document.getElementById(
         "save-status"
     ).textContent =
 
-        state.isModified
+        savedModified === "true"
             ? "Modified"
             : "Saved";
 

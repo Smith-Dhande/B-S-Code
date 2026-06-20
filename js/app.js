@@ -1,19 +1,35 @@
-import { selectFolder } from "./filesystem/openFolder.js";
-import { getFolderContent } from "./filesystem/openFolder.js";
+import { selectFolder }
+from "./filesystem/openFolder.js";
 
-import { createEditor } from "./editor/monaco.js";
+import { getFolderContent }
+from "./filesystem/openFolder.js";
 
-import { saveFile } from "./filesystem/saveFile.js";
+import { createEditor }
+from "./editor/monaco.js";
 
-import { createFile } from "./explorer/createFile.js";
-import { createFolder } from "./explorer/createFolder.js";
-import { deleteItem } from "./explorer/deleteItem.js";
-import { renderExplorer } from "./explorer/renderExplorer.js";
+import { saveFile }
+from "./filesystem/saveFile.js";
 
-import { loadModels } from "./ai/models.js";
-import { initializeChat } from "./ai/chat.js";
+import { createFile }
+from "./explorer/createFile.js";
 
-import { state } from "./state.js";
+import { createFolder }
+from "./explorer/createFolder.js";
+
+import { deleteItem }
+from "./explorer/deleteItem.js";
+
+import { renderExplorer }
+from "./explorer/renderExplorer.js";
+
+import { loadModels }
+from "./ai/models.js";
+
+import { initializeChat }
+from "./ai/chat.js";
+
+import { state }
+from "./state.js";
 
 function initializeExplorerActions() {
 
@@ -78,11 +94,23 @@ async function initializeApp() {
 
     createEditor();
 
-    loadModels();
+    await loadModels();
 
     initializeChat();
 
     initializeExplorerActions();
+
+    const savedModel =
+        sessionStorage.getItem(
+            "currentModel"
+        );
+
+    if (savedModel) {
+
+        state.currentModel =
+            savedModel;
+
+    }
 
     const openFolderButton =
         document.getElementById(

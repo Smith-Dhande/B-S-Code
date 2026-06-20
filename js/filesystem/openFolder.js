@@ -1,83 +1,128 @@
-import { state } from "../state.js";
-import { renderExplorer } from "../explorer/renderExplorer.js";
-import { updateUI } from "../ui/updateUI.js";
+import { state }
+from "../state.js";
+
+import { renderExplorer }
+from "../explorer/renderExplorer.js";
+
+import { updateUI }
+from "../ui/updateUI.js";
 
 async function selectFolder() {
 
+    const selectedOpenFolder =
+        await window.showDirectoryPicker();
 
-const selectedOpenFolder =
-    await window.showDirectoryPicker();
     await selectedOpenFolder.requestPermission({
-    mode: "readwrite"
-});
+        mode: "readwrite"
+    });
 
-state.selectedFolder = selectedOpenFolder;
-updateUI();
-state.folderStructure = await getFolderContent(selectedOpenFolder);
-renderExplorer();
+    state.selectedFolder =
+        selectedOpenFolder;
 
+    state.folderStructure =
+        await getFolderContent(
+            selectedOpenFolder
+        );
+
+    sessionStorage.setItem(
+        "projectName",
+        selectedOpenFolder.name
+    );
+
+    updateUI();
+
+    renderExplorer();
 
 }
 
 async function getFolderContent(
-folderHandle
+    folderHandle
 ) {
 
+    const contents = [];
 
-const contents = [];
-
-for await (
-    const [name, handle]
-    of folderHandle.entries()
-) {
-
-    if (
-        handle.kind === "file"
+    for await (
+        const [name, handle]
+        of folderHandle.entries()
     ) {
 
-        contents.push({
+        if (
+            handle.kind === "file"
+        ) {
 
-            name,
+            contents.push({
 
-            type: "file",
+                name,
 
-            handle,
+                type: "file",
 
-            parentHandle:
-                folderHandle
+                handle,
 
-        });
+                parentHandle:
+                    folderHandle
+
+            });
+
+        }
+
+        else if (
+            handle.kind ===
+            "directory"
+        ) {
+
+            contents.push({
+
+                name,
+
+                type: "directory",
+
+                handle,
+
+                parentHandle:
+                    folderHandle,
+
+                isExpanded: false,
+
+                children:
+                    await getFolderContent(
+                        handle
+                    )
+
+            });
+
+        }
 
     }
 
-    else if (
-        handle.kind ===
-        "directory"
-    ) {
+    return contents;
 
-        contents.push({
+}
 
-            name,
+function restoreProjectState() {
 
-            type: "directory",
+    const projectName =
+        sessionStorage.getItem(
+            "projectName"
+        );
 
-            handle,
-
-            parentHandle:folderHandle,
-
-            isExpanded: false,
-
-            children:await getFolderContent(handle)
-
-        });
-
+    if (!projectName) {
+        return;
     }
 
+    state.selectedFolder =
+        null;
+
+    state.folderStructure =
+        [];
+
+    updateUI();
+
+    renderExplorer();
+
 }
 
-return contents;
-
-
-}
-
-export {selectFolder,getFolderContent};
+export {
+    selectFolder,
+    getFolderContent,
+    restoreProjectState
+};

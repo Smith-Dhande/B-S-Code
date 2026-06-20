@@ -1,6 +1,9 @@
 import { state }
 from "../state.js";
 
+import { getLanguage }
+from "../utils/getLanguage.js";
+
 let editor;
 
 function createEditor() {
@@ -15,18 +18,54 @@ function createEditor() {
         ["vs/editor/editor.main"],
         function () {
 
+            const savedContent =
+                sessionStorage.getItem(
+                    "editorContent"
+                ) || "";
+
+            const activeFile =
+                sessionStorage.getItem(
+                    "activeFile"
+                );
+
+            const savedLanguage =
+                activeFile
+                    ? getLanguage(
+                        activeFile
+                    )
+                    : "javascript";
+
             editor =
                 monaco.editor.create(
                     document.getElementById(
                         "editor"
                     ),
                     {
-                        value: "",
-                        language: "javascript",
+                        value: savedContent,
+                        language: savedLanguage,
                         theme: "vs-dark",
                         automaticLayout: true
                     }
                 );
+
+            const savedModified =
+                sessionStorage.getItem(
+                    "isModified"
+                );
+
+            if (
+                savedModified === "true"
+            ) {
+
+                state.isModified =
+                    true;
+
+                document.getElementById(
+                    "save-status"
+                ).textContent =
+                    "Modified";
+
+            }
 
             editor.onDidChangeCursorPosition(
                 (event) => {
@@ -46,8 +85,24 @@ function createEditor() {
             editor.onDidChangeModelContent(
                 () => {
 
+                    const content =
+                        editor.getValue();
+
+                    state.currentFileContent =
+                        content;
+
                     state.isModified =
                         true;
+
+                    sessionStorage.setItem(
+                        "editorContent",
+                        content
+                    );
+
+                    sessionStorage.setItem(
+                        "isModified",
+                        "true"
+                    );
 
                     document.getElementById(
                         "save-status"
