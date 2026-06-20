@@ -1,4 +1,4 @@
-
+import { updateUI } from "../ui/updateUI.js";
 import {
 getModels
 } from "./ollama.js";
@@ -35,6 +35,7 @@ models.forEach(
 
     }
 );
+updateUI();
 
 }
 

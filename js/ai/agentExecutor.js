@@ -2,6 +2,10 @@ import { state }
 from "../state.js";
 
 import {
+    createFolderByName
+}
+from "../explorer/createFolder.js";
+import {
     createFileByName
 }
 from "../explorer/createFile.js";
@@ -36,6 +40,45 @@ import {
 }
 from "./codeGenerator.js";
 
+
+function findItemByName(
+    items,
+    name
+) {
+
+    for (
+        const item
+        of items
+    ) {
+
+        if (
+            item.name === name
+        ) {
+
+            return item;
+
+        }
+
+        if (
+            item.children
+        ) {
+
+            const found =
+                findItemByName(
+                    item.children,
+                    name
+                );
+
+            if (found)
+                return found;
+
+        }
+
+    }
+
+    return null;
+
+}
 async function executePlan(
     plan
 ) {
@@ -119,7 +162,44 @@ async function executePlan(
 
                 return content;
             }
+            case "createFolder": {
 
+                await createFolderByName(
+                    action.foldername,
+                    state.selectedFolder
+                );
+
+                break;
+            }
+            case "deleteItem": {
+
+                const item =
+                    findItemByName(
+                        state.folderStructure,
+                        action.name
+                    );
+
+                if (!item) {
+
+                    console.warn(
+                        "Item not found:",
+                        action.name
+                    );
+
+                    break;
+
+                }
+
+                await item.parentHandle
+                    .removeEntry(
+                        item.name,
+                        {
+                            recursive: true
+                        }
+                    );
+
+                break;
+            }
             default:
 
                 console.warn(

@@ -15,11 +15,9 @@ async function createFolder() {
             : state.selectedFolder;
 
     const folderHandle =
-        await targetFolder.getDirectoryHandle(
+        await createFolderByName(
             folderName,
-            {
-                create: true
-            }
+            targetFolder
         );
 
     const newFolder = {
@@ -54,4 +52,22 @@ async function createFolder() {
 
 }
 
-export { createFolder };
+async function createFolderByName(
+    folderName,
+    targetFolder
+) {
+
+    return await targetFolder
+        .getDirectoryHandle(
+            folderName,
+            {
+                create: true
+            }
+        );
+
+}
+
+export {
+    createFolder,
+    createFolderByName
+};

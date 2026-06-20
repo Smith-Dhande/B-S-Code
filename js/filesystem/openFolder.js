@@ -1,5 +1,6 @@
 import { state } from "../state.js";
 import { renderExplorer } from "../explorer/renderExplorer.js";
+import { updateUI } from "../ui/updateUI.js";
 
 async function selectFolder() {
 
@@ -11,7 +12,7 @@ const selectedOpenFolder =
 });
 
 state.selectedFolder = selectedOpenFolder;
-
+updateUI();
 state.folderStructure = await getFolderContent(selectedOpenFolder);
 renderExplorer();
 

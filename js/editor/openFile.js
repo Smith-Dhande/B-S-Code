@@ -1,6 +1,7 @@
 import { state } from "../state.js";
 import { getEditor } from "./monaco.js";
 import { getLanguage } from "../utils/getLanguage.js";
+import { updateUI } from "../ui/updateUI.js";
 
 async function openFile(item) {
 
@@ -9,6 +10,7 @@ async function openFile(item) {
     const fileContent = await file.text();
 
     state.activeFile = item;
+    updateUI();
     state.currentFileContent = fileContent;
 
     const editor = getEditor();
@@ -27,6 +29,7 @@ async function openFile(item) {
     );
 
     editor.setValue(fileContent);
+    updateUI()
 
 }
 

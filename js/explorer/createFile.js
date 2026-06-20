@@ -1,10 +1,12 @@
 import { state } from "../state.js";
 import { renderExplorer } from "./renderExplorer.js";
+import { updateUI } from "../ui/updateUI.js";
 
 async function createFile() {
 
 const fileName =
     prompt("File name");
+    updateUI()
 
 if (!fileName) return;
 
@@ -47,7 +49,7 @@ if (
 }
 
 renderExplorer();
-
+updateUI()
 }
 
 async function createFileByName(
@@ -62,6 +64,7 @@ const fileHandle =
             create: true
         }
     );
+    updateUI()
 
 return fileHandle;
 

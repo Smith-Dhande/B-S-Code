@@ -14,6 +14,7 @@ import {
     state
 }
 from "../state.js";
+import { updateUI } from "../ui/updateUI.js";
 function renderMessage(
 sender,
 message
@@ -60,6 +61,7 @@ return messageElement;
 
 async function handleChat() {
 
+ 
 
 const promptInput =
     document.getElementById(
@@ -211,7 +213,7 @@ try {
     `;
 
 }
-
+updateUI()
 
 }
 
@@ -226,7 +228,7 @@ sendButton.addEventListener(
     "click",
     handleChat
 );
-
+updateUI();
 
 }
 

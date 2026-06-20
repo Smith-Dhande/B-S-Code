@@ -1,3 +1,5 @@
+import { updateUI } from "../ui/updateUI.js";
+
 async function writeFile(
 fileHandle,
 content
@@ -13,7 +15,7 @@ await writable.write(
 
 await writable.close();
 
-
+updateUI()
 }
 
 export {

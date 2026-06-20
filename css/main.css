@@ -435,3 +435,17 @@ font-family:
 
 
 }
+.welcome-card{
+    padding: 1rem;
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+}
+.welcome-card p{
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+}

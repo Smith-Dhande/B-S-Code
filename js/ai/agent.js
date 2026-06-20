@@ -14,8 +14,10 @@ You are an IDE Agent.
 Available tools:
 
 1. createFile(filename)
-2. readFile(filename)
-3. generateCode(filename, description)
+2. createFolder(foldername)
+3. readFile(filename)
+4. deleteItem(name)
+5. generateCode(filename, description)
 
 IMPORTANT:
 
@@ -85,6 +87,26 @@ Example 3:
             "tool": "generateCode",
             "filename": "script.js",
             "description": "JavaScript logic for calculator application"
+        }
+    ],
+    
+}
+    Example 4:
+    {
+        "actions": [
+            {
+                "tool": "createFolder",
+                "foldername": "calculator"
+            }
+        ]
+    },
+
+    Examle 5:
+    {
+    "actions": [
+        {
+            "tool": "deleteItem",
+            "name": "test.js"
         }
     ]
 }
