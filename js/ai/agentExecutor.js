@@ -1,5 +1,10 @@
 import { state }
 from "../state.js";
+import {
+    generateFileCode,
+    fixFileCode
+}
+from "./codeGenerator.js";
 
 import {
     createFolderByName
@@ -35,12 +40,9 @@ import {
 }
 from "../editor/openFile.js";
 
-import {
-    generateFileCode
-}
-from "./codeGenerator.js";
 
 
+let currentFileContent = "";
 function findItemByName(
     items,
     name
@@ -150,17 +152,57 @@ async function executePlan(
                             action.filename
                         );
 
-                const content =
+                currentFileContent =
                     await readFile(
                         fileHandle
                     );
 
                 console.log(
                     "FILE CONTENT:",
-                    content
+                    currentFileContent
                 );
 
-                return content;
+                break;
+            }
+            case "fixFile": {
+
+                const fileHandle =
+                    await state.selectedFolder
+                        .getFileHandle(
+                            action.filename
+                        );
+
+                const currentCode =
+                    await readFile(
+                        fileHandle
+                    );
+
+                const fixedCode =
+                    await fixFileCode(
+                        state.currentModel,
+                        action.filename,
+                        currentCode,
+                        action.instruction
+                    );
+
+                await writeFile(
+                    fileHandle,
+                    fixedCode
+                );
+
+                if (
+                    state.activeFile &&
+                    state.activeFile.name ===
+                    action.filename
+                ) {
+
+                    await openFile(
+                        state.activeFile
+                    );
+
+                }
+
+                break;
             }
             case "createFolder": {
 

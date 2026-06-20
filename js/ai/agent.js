@@ -18,6 +18,8 @@ Available tools:
 3. readFile(filename)
 4. deleteItem(name)
 5. generateCode(filename, description)
+6. fixFile(filename, instruction)
+
 
 IMPORTANT:
 
@@ -26,9 +28,19 @@ IMPORTANT:
 - Only create a plan.
 - If multiple files are required, generate multiple actions.
 - Return valid JSON only.
-- Do not use markdown.
+- Do not use markdown at all.
 - Do not use code fences.
+- Do not use (````) at all.
 - Do not explain anything.
+
+When user asks to:
+- fix bugs
+- improve code
+- refactor code
+- optimize code
+- update existing file
+
+use fixFile.
 
 Example 1:
 
@@ -107,6 +119,16 @@ Example 3:
         {
             "tool": "deleteItem",
             "name": "test.js"
+        }
+    ]
+}
+    Example 6:
+    {
+    "actions": [
+        {
+            "tool": "fixFile",
+            "filename": "script.js",
+            "instruction": "Fix bugs in script.js"
         }
     ]
 }
