@@ -1,59 +1,127 @@
 import { selectFolder } from "./filesystem/openFolder.js";
+import { getFolderContent } from "./filesystem/openFolder.js";
+
 import { createEditor } from "./editor/monaco.js";
+
 import { saveFile } from "./filesystem/saveFile.js";
+
 import { createFile } from "./explorer/createFile.js";
 import { createFolder } from "./explorer/createFolder.js";
 import { deleteItem } from "./explorer/deleteItem.js";
+import { renderExplorer } from "./explorer/renderExplorer.js";
+
 import { loadModels } from "./ai/models.js";
 import { initializeChat } from "./ai/chat.js";
 
+import { state } from "./state.js";
 
-loadModels();
-initializeChat();
+function initializeExplorerActions() {
 
-const deleteButton =
-document.getElementById(
-"delete-button"
-);
+    const newFileButton =
+        document.getElementById(
+            "explorer-new-file-button"
+        );
 
-deleteButton.addEventListener(
-"click",
-deleteItem
-);
+    const newFolderButton =
+        document.getElementById(
+            "explorer-new-folder-button"
+        );
 
+    const deleteButton =
+        document.getElementById(
+            "delete-button"
+        );
 
-const saveButton =
-    document.getElementById("save-button");
+    const refreshButton =
+        document.getElementById(
+            "refresh-project-button"
+        );
 
-saveButton.addEventListener(
-    "click",
-    saveFile
-);
+    newFileButton.addEventListener(
+        "click",
+        createFile
+    );
 
-createEditor();
+    newFolderButton.addEventListener(
+        "click",
+        createFolder
+    );
 
-let openFolderBtn = document.getElementById("open-folder-button");
+    deleteButton.addEventListener(
+        "click",
+        deleteItem
+    );
 
-openFolderBtn.addEventListener("click", selectFolder);
+    refreshButton.addEventListener(
+        "click",
+        async () => {
 
-document.addEventListener("keydown", async (event) => {
+            if (
+                !state.selectedFolder
+            ) {
+                return;
+            }
 
-    if (event.ctrlKey && event.key.toLowerCase() === "s") {
+            state.folderStructure =
+                await getFolderContent(
+                    state.selectedFolder
+                );
 
-        event.preventDefault();
+            renderExplorer();
 
-        await saveFile();
+        }
+    );
 
-    }
+}
 
-});
+async function initializeApp() {
 
+    createEditor();
 
-const newFileButton = document.getElementById( "new-file-button");
+    loadModels();
 
-newFileButton.addEventListener("click",createFile);
+    initializeChat();
 
+    initializeExplorerActions();
 
-const newFolderButton = document.getElementById("new-folder-button");
+    const openFolderButton =
+        document.getElementById(
+            "open-folder-button"
+        );
 
-newFolderButton.addEventListener("click", createFolder);
+    openFolderButton.addEventListener(
+        "click",
+        selectFolder
+    );
+
+    const saveButton =
+        document.getElementById(
+            "save-button"
+        );
+
+    saveButton.addEventListener(
+        "click",
+        saveFile
+    );
+
+    document.addEventListener(
+        "keydown",
+        async (event) => {
+
+            if (
+                event.ctrlKey &&
+                event.key.toLowerCase() === "s"
+            ) {
+
+                event.preventDefault();
+
+                await saveFile();
+
+            }
+
+        }
+    );
+
+}
+
+initializeApp();
