@@ -30,7 +30,6 @@ IMPORTANT:
 - Return valid JSON only.
 - Do not use markdown at all.
 - Do not use code fences.
-- Do not use (````) at all.
 - Do not explain anything.
 
 When user asks to:
