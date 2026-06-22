@@ -1,17 +1,24 @@
-function initializeTheme() {
+function getSystemTheme() {
+
+    return window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches
+        ? "dark"
+        : "light";
+
+}
+
+function applyTheme(
+    theme
+) {
 
     const themeButton =
         document.getElementById(
             "theme-toggle-button"
         );
 
-    const savedTheme =
-        localStorage.getItem(
-            "theme"
-        );
-
     if (
-        savedTheme === "light"
+        theme === "light"
     ) {
 
         document.body.classList.add(
@@ -19,7 +26,7 @@ function initializeTheme() {
         );
 
         themeButton.textContent =
-            "Light Mode";
+            "Dark Mode";
 
         if (
             typeof monaco !==
@@ -35,6 +42,10 @@ function initializeTheme() {
     }
 
     else {
+
+        document.body.classList.remove(
+            "light-theme"
+        );
 
         themeButton.textContent =
             "Light Mode";
@@ -52,45 +63,81 @@ function initializeTheme() {
 
     }
 
+}
+
+function initializeTheme() {
+
+    const themeButton =
+        document.getElementById(
+            "theme-toggle-button"
+        );
+
+    const savedTheme =
+        sessionStorage.getItem(
+            "theme"
+        );
+
+    const initialTheme =
+        savedTheme ||
+        getSystemTheme();
+
+    applyTheme(
+        initialTheme
+    );
+
     themeButton.addEventListener(
         "click",
         () => {
-
-            document.body.classList.toggle(
-                "light-theme"
-            );
 
             const isLight =
                 document.body.classList.contains(
                     "light-theme"
                 );
 
-            localStorage.setItem(
-                "theme",
+            const nextTheme =
                 isLight
-                    ? "light"
-                    : "dark"
+                    ? "dark"
+                    : "light";
+
+            sessionStorage.setItem(
+                "theme",
+                nextTheme
             );
 
-            themeButton.textContent =
-                isLight
-                    ? "Light Mode"
-                    : "Dark Mode";
+            applyTheme(
+                nextTheme
+            );
 
-            if (
-                typeof monaco !==
-                "undefined"
-            ) {
+        }
+    );
 
-                monaco.editor.setTheme(
+    const mediaQuery =
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        );
 
-                    isLight
-                        ? "vs"
-                        : "vs-dark"
+    mediaQuery.addEventListener(
+        "change",
+        (event) => {
 
+            const savedTheme =
+                sessionStorage.getItem(
+                    "theme"
                 );
 
+            if (
+                savedTheme
+            ) {
+
+                return;
+
             }
+
+            applyTheme(
+                event.matches
+                    ? "dark"
+                    : "light"
+            );
 
         }
     );
@@ -98,5 +145,6 @@ function initializeTheme() {
 }
 
 export {
-    initializeTheme
+    initializeTheme,
+    applyTheme
 };

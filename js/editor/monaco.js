@@ -1,6 +1,11 @@
 import { state }
 from "../state.js";
 
+import {
+    applyTheme
+}
+from "../ui/theme.js";
+
 import { renderTabs }
 from "../tabs/renderTabs.js";
 
@@ -51,6 +56,23 @@ function createEditor() {
                     }
                 );
 
+            const savedTheme =
+                sessionStorage.getItem(
+                    "theme"
+                );
+
+            const systemTheme =
+                window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                ).matches
+                    ? "dark"
+                    : "light";
+
+            applyTheme(
+                savedTheme ||
+                systemTheme
+            );
+
             const savedModified =
                 sessionStorage.getItem(
                     "isModified"
@@ -91,11 +113,19 @@ function createEditor() {
                     if (
                         state.isOpeningFile
                     ) {
+
                         return;
+
                     }
 
                     const content =
                         editor.getValue();
+
+                    state.currentFileContent =
+                        content;
+
+                    state.isModified =
+                        true;
 
                     if (
                         state.activeFile &&
@@ -109,12 +139,6 @@ function createEditor() {
                         );
 
                     }
-
-                    state.currentFileContent =
-                        content;
-
-                    state.isModified =
-                        true;
 
                     sessionStorage.setItem(
                         "editorContent",
