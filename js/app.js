@@ -1,5 +1,7 @@
 import { selectFolder }from "./filesystem/openFolder.js";
 
+import { initializeTheme }from "./ui/theme.js";
+
 import { getFolderContent }from "./filesystem/openFolder.js";
 
 import { createEditor }from "./editor/monaco.js";
@@ -84,7 +86,7 @@ function initializeExplorerActions() {
 async function initializeApp() {
 
     createEditor();
-
+    initializeTheme();
     renderTabs();
 
     await loadModels();
