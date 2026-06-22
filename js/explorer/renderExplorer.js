@@ -271,27 +271,53 @@ function renderInlineCreationInput(
 
             try {
 
-                if (
-                    state.isCreatingFile
-                ) {
+               let targetFolder =
+    state.selectedFolder;
 
-                    await createFileByName(
-                        name,
-                        state.selectedFolder
-                    );
+if (
+    state.selectedExplorerItem
+) {
 
-                }
+    if (
+        state.selectedExplorerItem.type ===
+        "directory"
+    ) {
 
-                if (
-                    state.isCreatingFolder
-                ) {
+        targetFolder =
+            state.selectedExplorerItem.handle;
 
-                    await createFolderByName(
-                        name,
-                        state.selectedFolder
-                    );
+    }
 
-                }
+    else {
+
+        targetFolder =
+            state.selectedExplorerItem.parentHandle;
+
+    }
+
+}
+
+if (
+    state.isCreatingFile
+) {
+
+    await createFileByName(
+        name,
+        targetFolder
+    );
+
+}
+
+if (
+    state.isCreatingFolder
+) {
+
+    await createFolderByName(
+        name,
+        targetFolder
+    );
+
+}
 
             } catch (error) {
 
