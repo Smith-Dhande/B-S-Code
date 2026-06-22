@@ -449,3 +449,49 @@ font-family:
     align-items: center;
     justify-content: center;
 }
+
+#tabs-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 38px;
+    overflow-x: auto;
+}
+
+.editor-tab {
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    height: 100%;
+    cursor: pointer;
+    border-right: 1px solid #252526;
+    background: #2d2d30;
+    color: #cccccc;
+    white-space: nowrap;
+}
+
+.editor-tab:hover {
+    background: #37373d;
+}
+
+.active-tab {
+    background: #1e1e1e;
+    color: white;
+}
+
+.editor-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+.tab-close {
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.tab-close:hover {
+    opacity: 1;
+}

@@ -1,35 +1,26 @@
-import { selectFolder }
-from "./filesystem/openFolder.js";
+import { selectFolder }from "./filesystem/openFolder.js";
 
-import { getFolderContent }
-from "./filesystem/openFolder.js";
+import { getFolderContent }from "./filesystem/openFolder.js";
 
-import { createEditor }
-from "./editor/monaco.js";
+import { createEditor }from "./editor/monaco.js";
 
-import { saveFile }
-from "./filesystem/saveFile.js";
+import { saveFile }from "./filesystem/saveFile.js";
 
-import { createFile }
-from "./explorer/createFile.js";
+import { createFile }from "./explorer/createFile.js";
 
-import { createFolder }
-from "./explorer/createFolder.js";
+import { createFolder }from "./explorer/createFolder.js";
 
-import { deleteItem }
-from "./explorer/deleteItem.js";
+import { deleteItem }from "./explorer/deleteItem.js";
 
-import { renderExplorer }
-from "./explorer/renderExplorer.js";
+import { renderExplorer }from "./explorer/renderExplorer.js";
 
-import { loadModels }
-from "./ai/models.js";
+import { loadModels }from "./ai/models.js";
 
-import { initializeChat }
-from "./ai/chat.js";
+import { initializeChat }from "./ai/chat.js";
 
-import { state }
-from "./state.js";
+import { state }from "./state.js";
+
+import { renderTabs } from "./tabs/renderTabs.js";
 
 function initializeExplorerActions() {
 
@@ -93,6 +84,8 @@ function initializeExplorerActions() {
 async function initializeApp() {
 
     createEditor();
+
+    renderTabs();
 
     await loadModels();
 

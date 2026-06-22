@@ -1,14 +1,12 @@
-import { state }
-from "../state.js";
+import { state }from "../state.js";
 
-import { getEditor }
-from "./monaco.js";
+import { getEditor }from "./monaco.js";
 
-import { getLanguage }
-from "../utils/getLanguage.js";
+import { getLanguage }from "../utils/getLanguage.js";
 
-import { updateUI }
-from "../ui/updateUI.js";
+import { updateUI }from "../ui/updateUI.js";
+
+import { renderTabs } from "../tabs/renderTabs.js";
 
 async function openFile(
     item
@@ -37,6 +35,21 @@ async function openFile(
     state.activeFile =
         item;
 
+    const existingTab =
+    state.openTabs.find(
+        (tab) =>
+            tab.name === item.name
+    );
+
+if (
+    !existingTab
+) {
+
+    state.openTabs.push(
+        item
+    );
+
+}
     state.currentFileContent =
         fileContent;
 
@@ -74,7 +87,7 @@ async function openFile(
         "save-status"
     ).textContent =
         "Saved";
-
+    renderTabs();
     updateUI();
 
 }
