@@ -89,6 +89,26 @@ async function initializeApp() {
     initializeTheme();
     renderTabs();
 
+
+    document
+    .getElementById(
+        "new-file-button"
+    )
+    .addEventListener(
+        "click",
+        createFile
+    );
+
+document
+    .getElementById(
+        "new-folder-button"
+    )
+    .addEventListener(
+        "click",
+        createFolder
+    );
+
+
     await loadModels();
 
     initializeChat();

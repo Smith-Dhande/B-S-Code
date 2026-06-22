@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BS Code</title>
   <link rel="shortcut icon" href="assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -12,15 +13,44 @@
         <!-- Top Bar -->
         <header id="top-bar" class="top-bar">
             <div id="brand-area" class="brand-area">
-                <h1 class="project-title">BS Code</h1>
+
+                <div class="logo-container">
+                    <img
+                        src="assets/logos/BSCodeLogo.png"
+                        alt="BS Code Logo"
+                        class="brand-logo"
+                    >
+                    <div class="brand-actions">
+                    <button id="open-folder-button" class="top-bar-button">
+                        Open Folder
+                    </button>
+
+                    <button id="save-button" class="top-bar-button">
+                        Save
+                    </button>
+
+                    <button id="new-file-button" class="top-bar-button">
+                        New File
+                    </button>
+
+                    <button id="new-folder-button" class="top-bar-button">
+                        New Folder
+                    </button>
+
+                    <button id="theme-toggle-button" class="top-bar-button">
+                        🌙
+                    </button>
+                </div>
+
+                    
+                </div>
+
+                
             </div>
+            
 
             <nav id="top-bar-actions" class="top-bar-actions">
-                <button id="open-folder-button" class="top-bar-button" type="button" >Open Folder</button>
-                <button id="save-button" class="top-bar-button" type="button">Save</button>
-                <button id="new-file-button" class="top-bar-button" type="button">New File</button>
-                <button id="new-folder-button" class="top-bar-button" type="button">New Folder</button>
-                <button id="theme-toggle-button" class="top-bar-button">🌙</button>
+                
 
                 <label class="model-selector-label" for="model-selector">Model</label>
                 <select id="model-selector" class="model-selector" name="model">
@@ -30,9 +60,66 @@
         </header>
 
         <main id="ide-main" class="ide-main">
-            <div id="workspace">
+
+    <div id="workspace">
+
+        <!-- Activity Bar -->
+
+        <aside id="activity-bar">
+
+            <button
+                id="explorer-view-btn"
+                class="activity-button active"
+                title="Explorer"
+            >
+                <i class="fa-solid fa-folder"></i>
+            </button>
+
+            <button
+                id="search-view-btn"
+                class="activity-button"
+                title="Search"
+            >
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            <button
+                id="git-view-btn"
+                class="activity-button"
+                title="Source Control"
+            >
+                <i class="fa-solid fa-code-branch"></i>
+            </button>
+
+            <button
+                id="run-view-btn"
+                class="activity-button"
+                title="Run & Debug"
+            >
+                <i class="fa-solid fa-play"></i>
+            </button>
+
+            <button
+                id="github-view-btn"
+                class="activity-button"
+                title="GitHub"
+            >
+                <i class="fa-brands fa-github"></i>
+            </button>
+
+            <div class="activity-spacer"></div>
+
+            
+
+            
+
+        </aside>
+
+        <!-- File Explorer -->
+
+        <aside id="file-explorer" class="file-explorer">
                 <!-- File Explorer -->
-                <aside id="file-explorer" class="file-explorer">
+                
                 <header id="explorer-header" class="explorer-header">
                     <h2 class="explorer-title">Explorer</h2>
                     <div class="explorer-actions">
