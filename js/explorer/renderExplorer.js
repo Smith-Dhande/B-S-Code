@@ -115,22 +115,35 @@ function renderItems(
                 `${level * 20}px`;
 
             explorerItem.innerHTML = `
-                <span>
+    ${
+        item.type === "directory"
+            ? `
+                <span class="folder-arrow">
                     ${
-                        item.type === "directory"
-                            ? (
-                                item.isExpanded
-                                    ? "📂"
-                                    : "📁"
-                            )
-                            : "📄"
+                        item.isExpanded
+                            ? "⌄"
+                            : ">"
                     }
                 </span>
 
-                <span>
-                    ${item.name}
+                <span class="folder-icon">
+                    📁
                 </span>
-            `;
+            `
+            : `
+                <span class="file-spacer">
+                </span>
+
+                <span class="file-icon">
+                    📄
+                </span>
+            `
+    }
+
+    <span class="explorer-item-name">
+        ${item.name}
+    </span>
+`;
 
             explorerItem.addEventListener(
                 "click",
