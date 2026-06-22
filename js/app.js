@@ -2,6 +2,8 @@ import { selectFolder }from "./filesystem/openFolder.js";
 
 import { initializeTheme }from "./ui/theme.js";
 
+import { initializeActivityBar}from "./ui/activityBar.js";
+
 import { getFolderContent }from "./filesystem/openFolder.js";
 
 import { createEditor }from "./editor/monaco.js";
@@ -88,7 +90,7 @@ async function initializeApp() {
     createEditor();
     initializeTheme();
     renderTabs();
-
+    initializeActivityBar();
 
     document
     .getElementById(

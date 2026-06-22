@@ -4,7 +4,6 @@ from "../state.js";
 import { renderTabs }
 from "../tabs/renderTabs.js";
 
-
 import { getLanguage }
 from "../utils/getLanguage.js";
 
@@ -87,49 +86,56 @@ function createEditor() {
             );
 
             editor.onDidChangeModelContent(
-    () => {
+                () => {
 
-        const content =
-            editor.getValue();
+                    if (
+                        state.isOpeningFile
+                    ) {
+                        return;
+                    }
 
-        state.currentFileContent =
-            content;
+                    const content =
+                        editor.getValue();
 
-        state.isModified =
-            true;
+                    if (
+                        state.activeFile &&
+                        !state.modifiedFiles.includes(
+                            state.activeFile.name
+                        )
+                    ) {
 
-        if (
-            state.activeFile &&
-            !state.modifiedFiles.includes(
-                state.activeFile.name
-            )
-        ) {
+                        state.modifiedFiles.push(
+                            state.activeFile.name
+                        );
 
-            state.modifiedFiles.push(
-                state.activeFile.name
+                    }
+
+                    state.currentFileContent =
+                        content;
+
+                    state.isModified =
+                        true;
+
+                    sessionStorage.setItem(
+                        "editorContent",
+                        content
+                    );
+
+                    sessionStorage.setItem(
+                        "isModified",
+                        "true"
+                    );
+
+                    document.getElementById(
+                        "save-status"
+                    ).textContent =
+                        "Modified";
+
+                    renderTabs();
+
+                }
             );
 
-        }
-
-        sessionStorage.setItem(
-            "editorContent",
-            content
-        );
-
-        sessionStorage.setItem(
-            "isModified",
-            "true"
-        );
-
-        document.getElementById(
-            "save-status"
-        ).textContent =
-            "Modified";
-
-        renderTabs();
-
-    }
-);
         }
     );
 

@@ -7,6 +7,8 @@ const state = {
     openTabs: [],
     currentModel: null,
     chatHistory: [],
+    currentView:"explorer",
+    isOpeningFile: false,
     isModified: false,
     modifiedFiles: [],
     isCreatingFile: false,

@@ -116,8 +116,8 @@
         </aside>
 
         <!-- File Explorer -->
-
-        <aside id="file-explorer" class="file-explorer">
+            <div id="sidebar-panel">
+                <aside id="file-explorer" class="file-explorer">
                 <!-- File Explorer -->
                 
                 <header id="explorer-header" class="explorer-header">
@@ -138,6 +138,53 @@
                 </section>
                 </aside>
 
+                <aside
+                    id="search-panel"
+                    class="search-panel"
+                    hidden
+                >
+            
+                    <header
+                        class="search-header"
+                    >
+
+                        <h2>
+                            Search
+                        </h2>
+
+                    </header>
+
+                    <div
+                        class="search-container"
+                    >
+
+                        <input
+                            id="search-input"
+                            type="text"
+                            placeholder="Search"
+                        >
+
+                        <input
+                            id="replace-input"
+                            type="text"
+                            placeholder="Replace"
+                        >
+
+                        <button
+                            id="replace-all-button"
+                        >
+                            Replace All
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="search-results"
+                    >
+                    </div>
+
+                </aside>
+                </div>
                 <!-- Editor Section -->
                 <section id="editor-section" class="editor-section">
                 <header id="tabs-container" class="tabs-container">
@@ -155,7 +202,7 @@
                 <section id="split-editor-container" class="split-editor-container" hidden>
                 </section>
                 </section>
-
+                
                 <!-- AI Assistant Panel -->
                 <aside id="ai-assistant-panel" class="ai-assistant-panel">
                 <header id="ai-header" class="ai-header">
