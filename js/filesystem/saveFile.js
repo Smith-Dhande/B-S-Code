@@ -1,4 +1,5 @@
 import { state } from "../state.js";
+import { renderTabs }from "../tabs/renderTabs.js";
 import { getEditor } from "../editor/monaco.js";
 
 async function saveFile() {
@@ -10,20 +11,49 @@ async function saveFile() {
 
     try {
 
-        const editor = getEditor();
+    const editor =
+        getEditor();
 
-        const content = editor.getValue();
+    const content =
+        editor.getValue();
 
-        const writable =
-            await state.activeFile.handle.createWritable();
+    const writable =
+        await state.activeFile.handle.createWritable();
 
-        await writable.write(content);
+    await writable.write(
+        content
+    );
 
-        await writable.close();
+    await writable.close();
 
-        console.log("File saved successfully");
+    state.isModified =
+        false;
 
-    } catch (error) {
+    state.modifiedFiles =
+        state.modifiedFiles.filter(
+            (fileName) =>
+                fileName !==
+                state.activeFile.name
+        );
+
+    sessionStorage.setItem(
+        "isModified",
+        "false"
+    );
+
+    document.getElementById(
+        "save-status"
+    ).textContent =
+        "Saved";
+
+    renderTabs();
+
+    console.log(
+        "File saved successfully"
+    );
+
+}
+catch (error) {
 
         console.error(
             "Error saving file:",

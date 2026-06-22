@@ -1,6 +1,10 @@
 import { state }
 from "../state.js";
 
+import { renderTabs }
+from "../tabs/renderTabs.js";
+
+
 import { getLanguage }
 from "../utils/getLanguage.js";
 
@@ -83,35 +87,49 @@ function createEditor() {
             );
 
             editor.onDidChangeModelContent(
-                () => {
+    () => {
 
-                    const content =
-                        editor.getValue();
+        const content =
+            editor.getValue();
 
-                    state.currentFileContent =
-                        content;
+        state.currentFileContent =
+            content;
 
-                    state.isModified =
-                        true;
+        state.isModified =
+            true;
 
-                    sessionStorage.setItem(
-                        "editorContent",
-                        content
-                    );
+        if (
+            state.activeFile &&
+            !state.modifiedFiles.includes(
+                state.activeFile.name
+            )
+        ) {
 
-                    sessionStorage.setItem(
-                        "isModified",
-                        "true"
-                    );
-
-                    document.getElementById(
-                        "save-status"
-                    ).textContent =
-                        "Modified";
-
-                }
+            state.modifiedFiles.push(
+                state.activeFile.name
             );
 
+        }
+
+        sessionStorage.setItem(
+            "editorContent",
+            content
+        );
+
+        sessionStorage.setItem(
+            "isModified",
+            "true"
+        );
+
+        document.getElementById(
+            "save-status"
+        ).textContent =
+            "Modified";
+
+        renderTabs();
+
+    }
+);
         }
     );
 

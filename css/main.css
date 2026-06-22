@@ -695,3 +695,15 @@ font-family:
     font-size:16px;
 
 }
+
+.tab-dirty-dot{
+
+    color:grey;
+
+    font-size:10px;
+
+    display:flex;
+
+    align-items:center;
+
+}

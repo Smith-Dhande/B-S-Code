@@ -8,7 +8,9 @@ const state = {
     currentModel: null,
     chatHistory: [],
     isModified: false,
+    modifiedFiles: [],
     isCreatingFile: false,
     isCreatingFolder: false
 };
+
 export { state };

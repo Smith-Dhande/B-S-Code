@@ -47,15 +47,32 @@ function renderTabs() {
 
             }
 
-            tabElement.innerHTML = `
-                <span class="tab-name">
-                    ${tab.name}
-                </span>
+            const isModified =
+    state.modifiedFiles.includes(
+        tab.name
+    );
 
-                <span class="tab-close">
-                    ×
-                </span>
-            `;
+tabElement.innerHTML = `
+    <span class="tab-name">
+        ${tab.name}
+    </span>
+
+    ${
+        isModified
+        ? `
+            <span
+                class="tab-dirty-dot"
+            >
+                ●
+            </span>
+        `
+        : ""
+    }
+
+    <span class="tab-close">
+        ×
+    </span>
+`;
 
             tabElement.addEventListener(
                 "click",
