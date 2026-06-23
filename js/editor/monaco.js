@@ -24,6 +24,7 @@ function createEditor() {
 
     require(
         ["vs/editor/editor.main"],
+        
         function () {
 
             const savedContent =
@@ -44,7 +45,7 @@ function createEditor() {
                     : "javascript";
 
             editor =
-                monaco.editor.create(
+                monaco.editor.create(                    
                     document.getElementById(
                         "editor"
                     ),
@@ -55,6 +56,25 @@ function createEditor() {
                         automaticLayout: true
                     }
                 );
+                monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+
+                    noSemanticValidation: false,
+
+                    noSyntaxValidation: false
+
+                });
+
+                monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+
+                    allowNonTsExtensions: true,
+
+                    target:
+                        monaco.languages.typescript.ScriptTarget.ES2020,
+
+                    module:
+                        monaco.languages.typescript.ModuleKind.ESNext
+
+                });
 
             const savedTheme =
                 sessionStorage.getItem(

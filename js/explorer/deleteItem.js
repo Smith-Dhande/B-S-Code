@@ -12,7 +12,7 @@ if (
     !state.selectedExplorerItem
 ) {
 
-    alert(
+    console.log(
         "Select a file or folder"
     );
 

@@ -5,7 +5,7 @@ import { getEditor } from "../editor/monaco.js";
 async function saveFile() {
 
     if (!state.activeFile) {
-        alert("No file selected");
+        console.log("No file selected");
         return;
     }
 
