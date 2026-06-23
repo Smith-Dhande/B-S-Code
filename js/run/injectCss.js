@@ -34,11 +34,7 @@ async function injectCss(
         const href =
             match[1];
 
-        const resolvedPath =
-            resolvePath(
-                htmlFilePath,
-                href
-            );
+        const resolvedPath = resolvePath(htmlFilePath,href);
 
         const cssFile =
             findFileByPath(

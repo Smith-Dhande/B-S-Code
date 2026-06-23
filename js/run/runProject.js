@@ -5,6 +5,9 @@ import { findIndexFile } from "./findIndexFile.js";
 import { injectCss } from "./injectCss.js";
 
 import { injectImages }from "./injectImages.js";
+
+import { injectJs } from "./injectJs.js";
+
 async function runProject() {
 
     const indexFile =
@@ -38,6 +41,12 @@ html =
     );
     html =
     await injectImages(
+        html,
+        state.folderStructure,
+        indexFile.path
+    );
+    html =
+    await injectJs(
         html,
         state.folderStructure,
         indexFile.path
