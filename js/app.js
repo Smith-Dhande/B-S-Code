@@ -32,6 +32,7 @@ import { state }from "./state.js";
 
 import { renderTabs } from "./tabs/renderTabs.js";
 
+import { initializeTerminal }from "./terminal/terminal.js";
 
 window.resolvePath = resolvePath;
 window.state = state;
@@ -110,6 +111,7 @@ async function initializeApp() {
     renderTabs();
     initializeActivityBar();
     initializeSearch();
+    initializeTerminal();
 
     
     document

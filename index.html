@@ -106,7 +106,12 @@
             >
                 <i class="fa-brands fa-github"></i>
             </button>
-
+            <button
+                id="terminal-view-btn"
+                class="activity-button"
+            >
+                <i class="fa-solid fa-terminal"></i>
+            </button>
             <div class="activity-spacer"></div>
 
             
@@ -185,24 +190,92 @@
 
                 </aside>
                 </div>
-                <!-- Editor Section -->
-                <section id="editor-section" class="editor-section">
-                <header id="tabs-container" class="tabs-container">
-                    <div id="tabs-placeholder">
-                        
+               <!-- Editor Section -->
+                <section
+                    id="editor-section"
+                    class="editor-section"
+                >
+
+                    <header
+                        id="tabs-container"
+                        class="tabs-container"
+                    >
+
+                        <div
+                            id="tabs-placeholder"
+                        >
+
                             Ready to build something amazing?
-                        
+
+                        </div>
+
+                    </header>
+
+                    <section
+                        id="main-editor-container"
+                        class="main-editor-container"
+                    >
+
+                        <div
+                            id="editor"
+                        ></div>
+
+                    </section>
+
+                    <section
+                        id="split-editor-container"
+                        class="split-editor-container"
+                        hidden
+                    >
+                    </section>
+
+                    <!-- Terminal -->
+                    <section
+                    id="terminal-container"
+                    hidden
+                >
+
+                    <div
+                    id="terminal-header"
+                >
+
+                    <span>
+                        TERMINAL
+                    </span>
+
+                    <button
+                        id="close-terminal-button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+                    <div
+                        id="terminal-output"
+                    >
                     </div>
-                </header>
 
-                <section id="main-editor-container" class="main-editor-container">
-                    <div id="editor"></div>
+                    <div
+                        id="terminal-input-container"
+                    >
+
+                        <span
+                            id="terminal-prompt"
+                        >
+                            >
+                        </span>
+
+                        <input
+                            id="terminal-input"
+                            type="text"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
                 </section>
 
-                <section id="split-editor-container" class="split-editor-container" hidden>
                 </section>
-                </section>
-                
                 <!-- AI Assistant Panel -->
                 <aside id="ai-assistant-panel" class="ai-assistant-panel">
                 <header id="ai-header" class="ai-header">

@@ -831,3 +831,98 @@ font-family:
         2px;
 
 }
+
+
+/* Terminal css */
+.editor-section {
+
+    display: flex;
+
+    flex-direction: column;
+
+    height: 100%;
+
+}
+
+.main-editor-container {
+
+    flex: 1;
+
+    min-height: 0;
+
+}
+
+#terminal-container {
+
+    flex: 0 0 35%;
+
+    min-height: 220px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-top: 1px solid var(--border-color);
+
+    background: var(--bg-secondary);
+
+}
+#terminal-container[hidden] {
+    display: none !important;
+}
+
+#terminal-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0% 20px;
+}
+
+#terminal-input {
+
+    flex: 1;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: var(--text-primary);
+
+    font-family: Consolas, monospace;
+
+    font-size: 14px;
+
+}
+#terminal-output {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding: 10px;
+
+    font-family: Consolas, monospace;
+
+}
+#terminal-input-container {
+
+    flex-shrink: 0;
+
+}
+#terminal-output::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+#terminal-output {
+
+    scrollbar-width: none;
+
+}

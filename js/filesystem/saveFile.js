@@ -2,7 +2,6 @@ import { state } from "../state.js";
 import { renderTabs }from "../tabs/renderTabs.js";
 import { getEditor } from "../editor/monaco.js";
 import { refreshPreview }from "../run/refreshPreview.js";
-
 async function saveFile() {
 
     if (!state.activeFile) {
