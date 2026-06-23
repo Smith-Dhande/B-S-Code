@@ -9,7 +9,7 @@ async function createFile() {
         !state.selectedFolder
     ) {
 
-        alert(
+        console.log(
             "Open a folder first"
         );
 

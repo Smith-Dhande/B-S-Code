@@ -2,6 +2,8 @@ import { selectFolder }from "./filesystem/openFolder.js";
 
 import { initializeTheme }from "./ui/theme.js";
 
+import { initializeSearch }from "./search/searchEvents.js";
+
 import { initializeActivityBar}from "./ui/activityBar.js";
 
 import { getFolderContent }from "./filesystem/openFolder.js";
@@ -91,7 +93,9 @@ async function initializeApp() {
     initializeTheme();
     renderTabs();
     initializeActivityBar();
+    initializeSearch();
 
+    
     document
     .getElementById(
         "new-file-button"
