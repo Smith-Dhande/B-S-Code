@@ -4,6 +4,8 @@ const state = {
     activeFile: null,
     selectedExplorerItem: null,
     currentFileContent: "",
+    previewWindow: null,
+    previewUrl: null,
     openTabs: [],
     currentModel: null,
     chatHistory: [],

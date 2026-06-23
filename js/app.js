@@ -1,5 +1,7 @@
 import { selectFolder }from "./filesystem/openFolder.js";
 
+import { runProject } from "./run/runProject.js";
+
 import { initializeTheme }from "./ui/theme.js";
 
 import { initializeSearch }from "./search/searchEvents.js";
@@ -28,6 +30,14 @@ import { state }from "./state.js";
 
 import { renderTabs } from "./tabs/renderTabs.js";
 
+document
+    .getElementById(
+        "run-button"
+    )
+    .addEventListener(
+        "click",
+        runProject
+    );
 function initializeExplorerActions() {
 
     const newFileButton =
