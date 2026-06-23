@@ -1,6 +1,22 @@
+import {
+    findFileByPath
+}
+from "./findFileByPath.js";
+
+import {
+    processCssImages
+}
+from "./processCssImages.js";
+
+import {
+    resolvePath
+}
+from "./resolvePath.js";
+
 async function injectCss(
     html,
-    items
+    items,
+    htmlFilePath
 ) {
 
     const cssLinks =
@@ -15,18 +31,29 @@ async function injectCss(
         of cssLinks
     ) {
 
-        const cssPath =
+        const href =
             match[1];
 
+        const resolvedPath =
+            resolvePath(
+                htmlFilePath,
+                href
+            );
+
         const cssFile =
-            findFileByName(
+            findFileByPath(
                 items,
-                cssPath
+                resolvedPath
             );
 
         if (
             !cssFile
         ) {
+
+            console.warn(
+                "CSS file not found:",
+                resolvedPath
+            );
 
             continue;
 
@@ -35,8 +62,15 @@ async function injectCss(
         const file =
             await cssFile.handle.getFile();
 
-        const cssContent =
+        let cssContent =
             await file.text();
+
+        cssContent =
+            await processCssImages(
+                cssContent,
+                items,
+                cssFile.path
+            );
 
         html =
             html.replace(
@@ -44,61 +78,16 @@ async function injectCss(
                 match[0],
 
                 `
-                <style>
-                ${cssContent}
-                </style>
-                `
+<style>
+${cssContent}
+</style>
+`
 
             );
 
     }
 
     return html;
-
-}
-
-function findFileByName(
-    items,
-    fileName
-) {
-
-    for (
-        const item
-        of items
-    ) {
-
-        if (
-            item.type === "file" &&
-            item.name === fileName
-        ) {
-
-            return item;
-
-        }
-
-        if (
-            item.type === "directory"
-        ) {
-
-            const result =
-                findFileByName(
-                    item.children,
-                    fileName
-                );
-
-            if (
-                result
-            ) {
-
-                return result;
-
-            }
-
-        }
-
-    }
-
-    return null;
 
 }
 

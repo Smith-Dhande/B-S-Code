@@ -4,7 +4,7 @@ import { findIndexFile } from "./findIndexFile.js";
 
 import { injectCss } from "./injectCss.js";
 
-
+import { injectImages }from "./injectImages.js";
 async function runProject() {
 
     const indexFile =
@@ -33,7 +33,14 @@ async function runProject() {
 html =
     await injectCss(
         html,
-        state.folderStructure
+        state.folderStructure,
+        indexFile.path
+    );
+    html =
+    await injectImages(
+        html,
+        state.folderStructure,
+        indexFile.path
     );
 
     const blob =

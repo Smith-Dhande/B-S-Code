@@ -1,5 +1,4 @@
-import { state }
-from "../state.js";
+import { state } from "../state.js";
 
 import { renderExplorer }
 from "../explorer/renderExplorer.js";
@@ -32,11 +31,13 @@ async function selectFolder() {
     updateUI();
 
     renderExplorer();
+    console.log(state.folderStructure);
 
 }
 
 async function getFolderContent(
-    folderHandle
+    folderHandle,
+    currentPath = ""
 ) {
 
     const contents = [];
@@ -46,6 +47,11 @@ async function getFolderContent(
         of folderHandle.entries()
     ) {
 
+        const fullPath =
+            currentPath
+                ? `${currentPath}/${name}`
+                : name;
+
         if (
             handle.kind === "file"
         ) {
@@ -54,7 +60,11 @@ async function getFolderContent(
 
                 name,
 
-                type: "file",
+                path:
+                    fullPath,
+
+                type:
+                    "file",
 
                 handle,
 
@@ -74,18 +84,24 @@ async function getFolderContent(
 
                 name,
 
-                type: "directory",
+                path:
+                    fullPath,
+
+                type:
+                    "directory",
 
                 handle,
 
                 parentHandle:
                     folderHandle,
 
-                isExpanded: false,
+                isExpanded:
+                    false,
 
                 children:
                     await getFolderContent(
-                        handle
+                        handle,
+                        fullPath
                     )
 
             });
@@ -105,8 +121,12 @@ function restoreProjectState() {
             "projectName"
         );
 
-    if (!projectName) {
+    if (
+        !projectName
+    ) {
+
         return;
+
     }
 
     state.selectedFolder =

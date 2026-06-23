@@ -2,6 +2,8 @@ import { selectFolder }from "./filesystem/openFolder.js";
 
 import { runProject } from "./run/runProject.js";
 
+import { resolvePath } from "./run/resolvePath.js";
+
 import { initializeTheme }from "./ui/theme.js";
 
 import { initializeSearch }from "./search/searchEvents.js";
@@ -29,6 +31,10 @@ import { initializeChat }from "./ai/chat.js";
 import { state }from "./state.js";
 
 import { renderTabs } from "./tabs/renderTabs.js";
+
+
+window.resolvePath = resolvePath;
+window.state = state;
 
 document
     .getElementById(
