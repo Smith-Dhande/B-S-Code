@@ -1,7 +1,5 @@
-import {
-    openFile
-}
-from "../editor/openFile.js";
+import { openFile } from "../editor/openFile.js";
+import { getEditor } from "../editor/monaco.js";
 
 function renderSearchResults(
     results
@@ -59,9 +57,39 @@ function renderSearchResults(
                 async () => {
 
                     await openFile(
-                        result.fileItem
-                    );
+    result.fileItem
+);
 
+setTimeout(
+    () => {
+
+        const editor =
+            getEditor();
+
+        if (
+            !editor
+        ) {
+            return;
+        }
+
+        editor.revealLineInCenter(
+            result.lineNumber
+        );
+
+        editor.setPosition({
+
+            lineNumber:
+                result.lineNumber,
+
+            column: 1
+
+        });
+
+        editor.focus();
+
+    },
+    50
+);
                 }
             );
 

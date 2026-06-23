@@ -1,20 +1,12 @@
-import { state }
-from "../state.js";
+import { state } from "../state.js";
 
-import {
-    replaceProject
-}
-from "./replaceProject.js";
+import { replaceProject } from "./replaceProject.js";
 
-import {
-    searchProject
-}
-from "./searchProject.js";
+import { searchProject } from "./searchProject.js";
 
-import {
-    renderSearchResults
-}
-from "./renderSearchResults.js";
+import { renderSearchResults } from "./renderSearchResults.js";
+
+import { highlightSearchResults } from "./highlightSearchResults.js";
 
 function initializeSearch() {
 
@@ -89,9 +81,14 @@ renderSearchResults(
             ) {
 
                 document.getElementById(
-                    "search-results"
-                ).innerHTML =
-                    "";
+    "search-results"
+).innerHTML = "";
+
+highlightSearchResults(
+    ""
+);
+
+return;
 
                 return;
 
@@ -103,8 +100,12 @@ renderSearchResults(
                     searchTerm
                 );
 
-            renderSearchResults(
+           renderSearchResults(
                 results
+            );
+
+            highlightSearchResults(
+                searchTerm
             );
 
         }

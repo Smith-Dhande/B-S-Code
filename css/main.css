@@ -698,12 +698,12 @@ font-family:
 
     color:grey;
 
-    font-size:10px;
+    font-size:15px;
 
     display:flex;
 
     align-items:center;
-
+    text-shadow: 0px 0px 5px var(--text-primary);
 }
 
 .search-panel{
@@ -816,4 +816,19 @@ font-family:
 
 #file-explorer[hidden]{
     display:none !important;
+}
+
+.search-highlight {
+
+    background:
+        rgba(
+            255,
+            200,
+            0,
+            0.45
+        );
+
+    border-radius:
+        2px;
+
 }
