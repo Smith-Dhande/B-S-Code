@@ -253,10 +253,17 @@ async function executePlan(
 
     }
 
-    state.folderStructure =
-        await getFolderContent(
-            state.selectedFolder
-        );
+    const expandedFolders =
+    getExpandedFolders(
+        state.folderStructure
+    );
+
+state.folderStructure =
+    await getFolderContent(
+        state.selectedFolder,
+        "",
+        expandedFolders
+    );
 
     renderExplorer();
 

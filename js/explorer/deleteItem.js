@@ -39,9 +39,16 @@ await item.parentHandle
         }
     );
 
+const expandedFolders =
+    getExpandedFolders(
+        state.folderStructure
+    );
+
 state.folderStructure =
     await getFolderContent(
-        state.selectedFolder
+        state.selectedFolder,
+        "",
+        expandedFolders
     );
 
 state.selectedExplorerItem =

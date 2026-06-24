@@ -8,6 +8,8 @@ import { initializeTheme }from "./ui/theme.js";
 
 import { initializeSearch }from "./search/searchEvents.js";
 
+import { loadFolderHandle } from "./filesystem/folderHandleStorage.js";
+
 import { initializeActivityBar}from "./ui/activityBar.js";
 
 import { getFolderContent }from "./filesystem/openFolder.js";
@@ -113,7 +115,35 @@ async function initializeApp() {
     initializeSearch();
     initializeTerminal();
 
-    
+    const savedFolder =
+    await loadFolderHandle();
+
+if (
+    savedFolder
+) {
+
+    const permission =
+        await savedFolder.queryPermission({
+            mode: "readwrite"
+        });
+
+    if (
+        permission === "granted"
+    ) {
+
+        state.selectedFolder =
+            savedFolder;
+
+        state.folderStructure =
+            await getFolderContent(
+                savedFolder
+            );
+
+        renderExplorer();
+
+    }
+
+}
     document
     .getElementById(
         "new-file-button"

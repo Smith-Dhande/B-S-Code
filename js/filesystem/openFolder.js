@@ -1,10 +1,10 @@
 import { state } from "../state.js";
 
-import { renderExplorer }
-from "../explorer/renderExplorer.js";
+import { renderExplorer } from "../explorer/renderExplorer.js";
 
-import { updateUI }
-from "../ui/updateUI.js";
+import { updateUI } from "../ui/updateUI.js";
+
+import { saveFolderHandle }from "./folderHandleStorage.js";
 
 async function selectFolder() {
 
@@ -17,11 +17,20 @@ async function selectFolder() {
 
     state.selectedFolder =
         selectedOpenFolder;
+    await saveFolderHandle(
+    selectedOpenFolder
+);
+    const expandedFolders =
+    getExpandedFolders(
+        state.folderStructure
+    );
 
-    state.folderStructure =
-        await getFolderContent(
-            selectedOpenFolder
-        );
+state.folderStructure =
+    await getFolderContent(
+        state.selectedFolder,
+        "",
+        expandedFolders
+    );
 
     sessionStorage.setItem(
         "projectName",
@@ -35,9 +44,49 @@ async function selectFolder() {
 
 }
 
+function getExpandedFolders(
+    items,
+    expanded = []
+) {
+
+    items.forEach(
+        (
+            item
+        ) => {
+
+            if (
+                item.type ===
+                "directory"
+            ) {
+
+                if (
+                    item.isExpanded
+                ) {
+
+                    expanded.push(
+                        item.path
+                    );
+
+                }
+
+                getExpandedFolders(
+                    item.children,
+                    expanded
+                );
+
+            }
+
+        }
+    );
+
+    return expanded;
+
+}
+
 async function getFolderContent(
     folderHandle,
-    currentPath = ""
+    currentPath = "",
+    expandedFolders = []
 ) {
 
     const contents = [];
@@ -96,7 +145,9 @@ async function getFolderContent(
                     folderHandle,
 
                 isExpanded:
-                    false,
+                expandedFolders.includes(
+                    fullPath
+                ),
 
                 children:
                     await getFolderContent(
@@ -140,9 +191,9 @@ function restoreProjectState() {
     renderExplorer();
 
 }
-
 export {
     selectFolder,
     getFolderContent,
-    restoreProjectState
+    restoreProjectState,
+    getExpandedFolders
 };

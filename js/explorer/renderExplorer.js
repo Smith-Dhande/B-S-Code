@@ -346,10 +346,17 @@ if (
             state.isCreatingFolder =
                 false;
 
-            state.folderStructure =
-                await getFolderContent(
-                    state.selectedFolder
-                );
+            const expandedFolders =
+    getExpandedFolders(
+        state.folderStructure
+    );
+
+state.folderStructure =
+    await getFolderContent(
+        state.selectedFolder,
+        "",
+        expandedFolders
+    );
 
             renderExplorer();
 
