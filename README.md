@@ -2,6 +2,8 @@
 
 A browser-based code editor that looks suspiciously like VS Code but was built with pure HTML, CSS, and JavaScript because apparently suffering builds character.
 
+> A code editor built because creating a browser IDE sounded easier than learning self-control.
+
 ## Features
 
 * Open real folders from your system
@@ -11,7 +13,7 @@ A browser-based code editor that looks suspiciously like VS Code but was built w
 * Syntax highlighting for multiple languages
 * Local AI coding assistant powered by Ollama
 * Switch between DeepSeek, Gemma, Qwen, and other models
-* Save changes without sacrificing a goat to the Coding Entity (JavaScript Gods)
+* Save changes without sacrificing a goat to the JavaScript gods
 * Dark theme because every developer is legally required to have one
 
 ## Why "BS Code"?
@@ -19,7 +21,7 @@ A browser-based code editor that looks suspiciously like VS Code but was built w
 Because:
 
 * AI writes half the code.
-* The other half comes from AI too may be 1 or 2 lines from devloper (Optional).
+* The developer takes credit for the other half.
 * Bugs somehow fix themselves and then reappear later.
 * Every debugging session eventually becomes a philosophical discussion.
 * Most programming turns into BS anyway.
@@ -44,6 +46,38 @@ Some features work exactly as intended.
 Some features work accidentally.
 
 A few features are still negotiating their existence.
+
+Jokes aside, the core editor, file management system, terminal, AI integration, and live preview are fully functional.
+
+New features and improvements are being added regularly as the project evolves.
+
+## Screenshots
+
+### Full IDE
+
+![Full IDE](assets/screenshots/fullIDE.png)
+
+The complete BS Code workspace with file explorer, editor, AI assistant, and terminal.
+
+### File Explorer
+
+![File Explorer](assets/screenshots/file-explorer.png)
+
+Browse projects, navigate nested folders, and manage files.
+
+### AI Assistant
+
+![AI Assistant](assets/screenshots/ai-pannel.png)
+
+Local AI coding assistant powered by Ollama with support for multiple models.
+
+### Embedded Terminal
+
+![Terminal](assets/screenshots/terminal.png)
+
+Built-in terminal for running commands without leaving the editor.
+
+
 
 ## Roadmap
 
