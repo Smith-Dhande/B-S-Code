@@ -1,19 +1,13 @@
 import { state }
 from "../state.js";
 
-import {
-    getFolderContent
-}
-from "../filesystem/openFolder.js";
+import { getFolderContent , getExpandedFolders } from "../filesystem/openFolder.js";
 
-import { openFile }
-from "../editor/openFile.js";
+import { openFile } from "../editor/openFile.js";
 
-import { createFileByName }
-from "./createFile.js";
+import { createFileByName } from "./createFile.js";
 
-import { createFolderByName }
-from "./createFolder.js";
+import { createFolderByName } from "./createFolder.js";
 
 function renderExplorer() {
 
