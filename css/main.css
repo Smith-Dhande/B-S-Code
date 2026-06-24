@@ -926,3 +926,8 @@ font-family:
     scrollbar-width: none;
 
 }
+#close-terminal-button{
+    background-color: transparent;
+    color: white;
+    border: none;
+}

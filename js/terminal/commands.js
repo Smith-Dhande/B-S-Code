@@ -26,21 +26,59 @@ function executeCommand(
 
         case "help":
 
-            appendLine(
-`Available Commands
+    appendLine(
+        "Available Commands:"
+    );
 
-help
-clear
-pwd
-ls
-tree
-echo
-date
-whoami
-project
-count
-history`
-            );
+    appendLine(
+        ""
+    );
+
+    appendLine(
+        "• help"
+    );
+
+    appendLine(
+        "• clear"
+    );
+
+    appendLine(
+        "• pwd"
+    );
+
+    appendLine(
+        "• ls"
+    );
+
+    appendLine(
+        "• tree"
+    );
+
+    appendLine(
+        "• echo"
+    );
+
+    appendLine(
+        "• date"
+    );
+
+    appendLine(
+        "• whoami"
+    );
+
+    appendLine(
+        "• project"
+    );
+
+    appendLine(
+        "• count"
+    );
+
+    appendLine(
+        "• history"
+    );
+
+    break;
 
             break;
 
