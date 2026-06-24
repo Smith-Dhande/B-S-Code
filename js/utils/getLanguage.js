@@ -1,8 +1,16 @@
-function getLanguage(fileName) {
+function getLanguage(
+    fileName
+) {
 
-    const extension = fileName.split(".").pop().toLowerCase();
+    const extension =
+        fileName
+            .split(".")
+            .pop()
+            .toLowerCase();
 
-    switch (extension) {
+    switch (
+        extension
+    ) {
 
         case "html":
             return "html";
@@ -19,9 +27,40 @@ function getLanguage(fileName) {
         case "md":
             return "markdown";
 
+        case "py":
+            return "python";
+
+        case "java":
+            return "java";
+
+        case "c":
+            return "c";
+
+        case "cpp":
+            return "cpp";
+
+        case "h":
+            return "cpp";
+
+        case "cs":
+            return "csharp";
+
+        case "xml":
+            return "xml";
+
+        case "sql":
+            return "sql";
+
+        case "php":
+            return "php";
+
         default:
             return "plaintext";
+
     }
+
 }
 
-export { getLanguage };
+export {
+    getLanguage
+};
