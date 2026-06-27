@@ -2,5 +2,28 @@
   "dependencies": {
     "marked": "^18.0.5",
     "monaco-editor": "^0.55.1"
-  }
+  },
+  "name": "bs-code",
+  "version": "1.0.0",
+  "description": "A browser-based code editor that looks suspiciously like VS Code but was built with pure HTML, CSS, and JavaScript because apparently suffering builds character.",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^42.5.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smith-Dhande/B-S-Code.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Smith-Dhande/B-S-Code/issues"
+  },
+  "homepage": "https://github.com/Smith-Dhande/B-S-Code#readme"
 }
