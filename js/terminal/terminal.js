@@ -3,11 +3,6 @@ import {
 }
 from "../editor/monaco.js";
 
-import {
-    executeCommand
-}
-from "./commands.js";
-
 function initializeTerminal() {
 
     const terminalButton =
@@ -30,25 +25,23 @@ function initializeTerminal() {
             "terminal-input"
         );
 
-    console.log(
-        "Terminal initialized"
-    );
+    const output =
+        document.getElementById(
+            "terminal-output"
+        );
 
     terminalButton.addEventListener(
         "click",
         () => {
 
-            terminal.hidden =
-                false;
+            terminal.hidden = false;
 
             input.focus();
 
             const editor =
                 getEditor();
 
-            if (
-                editor
-            ) {
+            if (editor) {
 
                 setTimeout(
                     () => {
@@ -68,15 +61,12 @@ function initializeTerminal() {
         "click",
         () => {
 
-            terminal.hidden =
-                true;
+            terminal.hidden = true;
 
             const editor =
                 getEditor();
 
-            if (
-                editor
-            ) {
+            if (editor) {
 
                 setTimeout(
                     () => {
@@ -92,15 +82,33 @@ function initializeTerminal() {
         }
     );
 
+    window.terminal.onOutput(
+
+        (data) => {
+
+            output.textContent += data;
+
+            output.scrollTop =
+                output.scrollHeight;
+
+        }
+
+    );
+
     input.addEventListener(
+
         "keydown",
-        (
+
+        async (
+
             event
+
         ) => {
 
             if (
-                event.key !==
-                "Enter"
+
+                event.key !== "Enter"
+
             ) {
 
                 return;
@@ -111,30 +119,34 @@ function initializeTerminal() {
                 input.value.trim();
 
             if (
+
                 !command
+
             ) {
 
                 return;
 
             }
 
-            console.log(
-                "Command:",
+            output.textContent +=
+                `> ${command}\n`;
+
+            await window.terminal.execute(
+
                 command
+
             );
 
-            executeCommand(
-                command
-            );
-
-            input.value =
-                "";
+            input.value = "";
 
         }
+
     );
 
 }
 
 export {
+
     initializeTerminal
+
 };

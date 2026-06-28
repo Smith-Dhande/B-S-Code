@@ -1,6 +1,49 @@
 {
+  "name": "bs-code",
+  "version": "2.0.0",
+  "description": "A lightweight desktop code editor inspired by VS Code, powered by Electron, Monaco Editor, and local AI models.",
+  "main": "electron/main.js",
+  "type": "commonjs",
+
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+
   "dependencies": {
     "marked": "^18.0.5",
     "monaco-editor": "^0.55.1"
-  }
+  },
+
+  "devDependencies": {
+    "electron": "^42.5.0"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smith-Dhande/B-S-Code.git"
+  },
+
+  "keywords": [
+    "editor",
+    "code-editor",
+    "electron",
+    "monaco",
+    "javascript",
+    "html",
+    "css",
+    "ai",
+    "ollama",
+    "developer-tools"
+  ],
+
+  "author": "Smith Dhande",
+
+  "license": "MIT",
+
+  "bugs": {
+    "url": "https://github.com/Smith-Dhande/B-S-Code/issues"
+  },
+
+  "homepage": "https://github.com/Smith-Dhande/B-S-Code#readme"
 }

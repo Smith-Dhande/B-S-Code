@@ -897,19 +897,7 @@ font-family:
     font-size: 14px;
 
 }
-#terminal-output {
 
-    flex: 1;
-
-    overflow-y: auto;
-
-    overflow-x: hidden;
-
-    padding: 10px;
-
-    font-family: Consolas, monospace;
-
-}
 #terminal-input-container {
 
     flex-shrink: 0;
@@ -921,13 +909,28 @@ font-family:
 
 }
 
-#terminal-output {
 
-    scrollbar-width: none;
-
-}
 #close-terminal-button{
     background-color: transparent;
     color: white;
     border: none;
+}
+#terminal-output {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding: 10px;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+
+    font-family: Consolas, monospace;
+
+    scrollbar-width: none;
+
 }
