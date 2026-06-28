@@ -1,54 +1,18 @@
-import {
-    state
-}
-from "../state.js";
+import { state }from "../state.js";
 
-function executeCommand(
-    command
-) {
-
-    appendLine(
-        `> ${command}`
-    );
-
-    const parts =
-        command.split(
-            " "
-        );
-
-    const cmd =
-        parts[0]
-            .toLowerCase();
-
-    switch (
-        cmd
-    ) {
-
+function executeCommand(command)
+{
+    appendLine(`> ${command}`);
+    const parts = command.split(" ");
+    const cmd = parts[0].toLowerCase();
+    switch ( cmd ) {
         case "help":
-
-    appendLine(
-        "Available Commands:"
-    );
-
-    appendLine(
-        ""
-    );
-
-    appendLine(
-        "• help"
-    );
-
-    appendLine(
-        "• clear"
-    );
-
-    appendLine(
-        "• pwd"
-    );
-
-    appendLine(
-        "• ls"
-    );
+    appendLine("Available Commands:");
+    appendLine("");
+    appendLine("• help");
+    appendLine("• clear");
+    appendLine("• pwd");
+    appendLine("• ls");
 
     appendLine(
         "• tree"
