@@ -1,0 +1,118 @@
+const { exec } = require("child_process");
+
+function executeGitCommand(
+    command,
+    cwd
+) {
+
+    return new Promise(
+
+        (
+            resolve,
+            reject
+        ) => {
+
+            exec(
+
+                command,
+
+                {
+                    cwd
+                },
+
+                (
+                    error,
+                    stdout,
+                    stderr
+                ) => {
+
+                    if (
+                        error
+                    ) {
+
+                        reject(
+                            stderr ||
+                            error.message
+                        );
+
+                        return;
+
+                    }
+
+                    resolve(
+                        stdout.trim()
+                    );
+
+                }
+
+            );
+
+        }
+
+    );
+
+}
+
+async function isGitRepository(
+    projectPath
+) {
+
+    try {
+
+        await executeGitCommand(
+
+            "git rev-parse --is-inside-work-tree",
+
+            projectPath
+
+        );
+
+        return true;
+
+    }
+
+    catch {
+
+        return false;
+
+    }
+
+}
+
+async function getCurrentBranch(
+    projectPath
+) {
+
+    return await executeGitCommand(
+
+        "git branch --show-current",
+
+        projectPath
+
+    );
+
+}
+
+async function getGitStatus(
+    projectPath
+) {
+
+    return await executeGitCommand(
+
+        "git status --porcelain",
+
+        projectPath
+
+    );
+
+}
+
+module.exports = {
+
+    isGitRepository,
+
+    getCurrentBranch,
+
+    getGitStatus
+
+};

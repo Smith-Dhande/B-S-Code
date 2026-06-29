@@ -52,3 +52,55 @@ contextBridge.exposeInMainWorld(
     }
 
 );
+
+contextBridge.exposeInMainWorld(
+
+    "git",
+
+    {
+
+        isRepository(
+            projectPath
+        ) {
+
+            return ipcRenderer.invoke(
+
+                "git:isRepository",
+
+                projectPath
+
+            );
+
+        },
+
+        getBranch(
+            projectPath
+        ) {
+
+            return ipcRenderer.invoke(
+
+                "git:getBranch",
+
+                projectPath
+
+            );
+
+        },
+
+        getStatus(
+            projectPath
+        ) {
+
+            return ipcRenderer.invoke(
+
+                "git:getStatus",
+
+                projectPath
+
+            );
+
+        }
+
+    }
+
+);
