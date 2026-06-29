@@ -934,3 +934,102 @@ font-family:
     scrollbar-width: none;
 
 }
+
+
+.git-panel{
+
+    background: var(--bg-secondary);
+
+    border-right: 1px solid var(--border-color);
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.git-header{
+
+    padding: 12px 16px;
+
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+.git-header h2{
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    font-weight: 600;
+
+    color: var(--text-secondary);
+
+}
+
+.git-section{
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+.git-empty-state{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 15px;
+
+    color: var(--text-muted);
+
+}
+
+.git-empty-state i{
+
+    font-size: 48px;
+
+    opacity: .7;
+
+}
+
+.git-empty-state h3{
+
+    font-size: 18px;
+
+    color: var(--text-primary);
+
+}
+
+.git-empty-state p{
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    max-width: 200px;
+
+}
+
+#git-panel[hidden]{
+
+    display:none !important;
+
+}
