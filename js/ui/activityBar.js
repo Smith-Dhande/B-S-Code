@@ -25,11 +25,21 @@ function switchView(
         "search";
 
     document
+        .getElementById(
+            "git-panel"
+        )
+        .hidden =
+        view !==
+        "git";
+
+    document
         .querySelectorAll(
             ".activity-button"
         )
         .forEach(
-            (button) => {
+            (
+                button
+            ) => {
 
                 button.classList.remove(
                     "active"
@@ -38,33 +48,45 @@ function switchView(
             }
         );
 
-    if (
-        view ===
-        "explorer"
+    switch (
+        view
     ) {
 
-        document
-            .getElementById(
-                "explorer-view-btn"
-            )
-            .classList.add(
-                "active"
-            );
+        case "explorer":
 
-    }
+            document
+                .getElementById(
+                    "explorer-view-btn"
+                )
+                .classList.add(
+                    "active"
+                );
 
-    if (
-        view ===
-        "search"
-    ) {
+            break;
 
-        document
-            .getElementById(
-                "search-view-btn"
-            )
-            .classList.add(
-                "active"
-            );
+        case "search":
+
+            document
+                .getElementById(
+                    "search-view-btn"
+                )
+                .classList.add(
+                    "active"
+                );
+
+            break;
+
+        case "git":
+
+            document
+                .getElementById(
+                    "git-view-btn"
+                )
+                .classList.add(
+                    "active"
+                );
+
+            break;
 
     }
 
@@ -102,9 +124,30 @@ function initializeActivityBar() {
             }
         );
 
+    document
+        .getElementById(
+            "git-view-btn"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                switchView(
+                    "git"
+                );
+
+            }
+        );
+
+    switchView(
+        "explorer"
+    );
+
 }
 
 export {
+
     initializeActivityBar,
     switchView
+
 };
