@@ -84,7 +84,8 @@ Debugging your own IDE was never part of the original plan.
 ---
 
 # 🚀 Features
-
+<div align="center">
+  
 | Category | Features |
 |----------|----------|
 | **Editor** | Monaco Editor, Multi-tab editing, Syntax Highlighting, Autosave, Multiple Language Support |
@@ -97,6 +98,7 @@ Debugging your own IDE was never part of the original plan.
 | **Preview** | Live HTML/CSS/JavaScript Preview |
 | **Desktop** | Electron Desktop App, Windows Installer, Theme Support |
 
+</div>
 ---
 
 # 📸 Screenshots
