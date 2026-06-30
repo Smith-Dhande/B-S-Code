@@ -146,6 +146,15 @@ async function getFolderContent(
         of folderHandle.entries()
     ) {
 
+        if (
+            name === ".git" ||
+            name === "node_modules"
+        ) {
+
+            continue;
+
+        }
+
         const fullPath =
             currentPath
                 ? `${currentPath}/${name}`

@@ -1,50 +1,50 @@
-import { state } from "../state.js";
+    import { state } from "../state.js";
 
-import { renderExplorer }
-from "./renderExplorer.js";
+    import { renderExplorer }
+    from "./renderExplorer.js";
 
-async function createFile() {
+    async function createFile() {
 
-    if (
-        !state.selectedFolder
-    ) {
+        if (
+            !state.selectedFolder
+        ) {
 
-        console.log(
-            "Open a folder first"
-        );
+            console.log(
+                "Open a folder first"
+            );
 
-        return;
+            return;
+
+        }
+
+        state.isCreatingFolder =
+            false;
+
+        state.isCreatingFile =
+            true;
+
+        renderExplorer();
 
     }
 
-    state.isCreatingFolder =
-        false;
+    async function createFileByName(
+        fileName,
+        targetFolder
+    ) {
 
-    state.isCreatingFile =
-        true;
+        const fileHandle =
+            await targetFolder.getFileHandle(
+                fileName,
+                {
+                    create: true
+                }
+            );
 
-    renderExplorer();
+        return fileHandle;
 
-}
+    }
 
-async function createFileByName(
-    fileName,
-    targetFolder
-) {
-
-    const fileHandle =
-        await targetFolder.getFileHandle(
-            fileName,
-            {
-                create: true
-            }
-        );
-
-    return fileHandle;
-
-}
-
-export {
-    createFile,
-    createFileByName
-};
+    export {
+        createFile,
+        createFileByName
+    };

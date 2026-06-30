@@ -69,9 +69,11 @@ renderSearchResults(
             "search-input"
         );
     
+    let searchTimeout;
+
     searchInput.addEventListener(
         "input",
-        async () => {
+        () => {
 
             const searchTerm =
                 searchInput.value.trim();
@@ -80,32 +82,50 @@ renderSearchResults(
                 !searchTerm
             ) {
 
+                clearTimeout(searchTimeout);
+
                 document.getElementById(
-    "search-results"
-).innerHTML = "";
+                    "search-results"
+                ).innerHTML = "";
 
-highlightSearchResults(
-    ""
-);
-
-return;
+                highlightSearchResults(
+                    ""
+                );
 
                 return;
 
             }
 
-            const results =
-                await searchProject(
-                    state.folderStructure,
-                    searchTerm
-                );
+            clearTimeout(searchTimeout);
 
-           renderSearchResults(
-                results
-            );
+            searchTimeout = setTimeout(
+                async () => {
 
-            highlightSearchResults(
-                searchTerm
+                    const results =
+                        await searchProject(
+                            state.folderStructure,
+                            searchTerm
+                        );
+
+                    if (
+                        searchInput.value.trim() !==
+                        searchTerm
+                    ) {
+
+                        return;
+
+                    }
+
+                    renderSearchResults(
+                        results
+                    );
+
+                    highlightSearchResults(
+                        searchTerm
+                    );
+
+                },
+                300
             );
 
         }
