@@ -257,6 +257,7 @@ This approach keeps file editing lightweight while allowing privileged operation
 | Embedded Terminal | Electron |
 | GitHub Authentication | Electron |
 | Native File Operations | Electron |
+
 </div>
 
 This hybrid architecture allows the editor to remain responsive while still supporting native desktop capabilities such as Git, Terminal, and GitHub integration.
@@ -264,7 +265,8 @@ This hybrid architecture allows the editor to remain responsive while still supp
 ---
 
 # ⚙️ Technology Stack
-
+<div align="center">
+  
 | Category | Technology |
 |----------|------------|
 | **Desktop Framework** | Electron |
@@ -277,6 +279,7 @@ This hybrid architecture allows the editor to remain responsive while still supp
 | **Packaging** | Electron Builder |
 | **Native APIs** | Browser File System Access API, Electron IPC, Node.js, child_process |
 
+</div>
 ---
 
 # 📁 Project Structure
