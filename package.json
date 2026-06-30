@@ -1,13 +1,20 @@
 {
   "name": "bs-code",
-  "version": "2.0.0",
-  "description": "A lightweight desktop code editor inspired by VS Code, powered by Electron, Monaco Editor, and local AI models.",
+  "productName": "BS Code",
+  "version": "2.0.0-alpha.1",
+  "description": "A lightweight AI-powered desktop code editor inspired by VS Code, built with Electron, Monaco Editor, and local AI models.",
+  "author": "Smith Dhande",
+  "license": "MIT",
   "main": "electron/main.js",
   "type": "commonjs",
 
   "scripts": {
     "start": "electron .",
-    "dev": "electron ."
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:portable": "electron-builder --win portable"
   },
 
   "dependencies": {
@@ -16,7 +23,8 @@
   },
 
   "devDependencies": {
-    "electron": "^42.5.0"
+    "electron": "^42.5.0",
+    "electron-builder": "^26.15.3"
   },
 
   "repository": {
@@ -24,26 +32,69 @@
     "url": "git+https://github.com/Smith-Dhande/B-S-Code.git"
   },
 
-  "keywords": [
-    "editor",
-    "code-editor",
-    "electron",
-    "monaco",
-    "javascript",
-    "html",
-    "css",
-    "ai",
-    "ollama",
-    "developer-tools"
-  ],
-
-  "author": "Smith Dhande",
-
-  "license": "MIT",
+  "homepage": "https://github.com/Smith-Dhande/B-S-Code#readme",
 
   "bugs": {
     "url": "https://github.com/Smith-Dhande/B-S-Code/issues"
   },
 
-  "homepage": "https://github.com/Smith-Dhande/B-S-Code#readme"
+  "keywords": [
+    "editor",
+    "code-editor",
+    "electron",
+    "desktop",
+    "ide",
+    "monaco",
+    "ollama",
+    "ai",
+    "developer-tools",
+    "github",
+    "git"
+  ],
+
+  "build": {
+    "appId": "com.smithdhande.bscode",
+    "productName": "BS Code",
+
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!node_modules/.cache/**",
+      "!**/*.log",
+      "!**/.DS_Store",
+      "!**/Thumbs.db",
+      "!README.md",
+      "!LICENSE"
+    ],
+
+    "asar": true,
+
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "BS-Code-Setup-${version}.${ext}"
+    },
+
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "BS Code",
+      "deleteAppDataOnUninstall": false
+    }
+  }
 }
