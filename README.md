@@ -134,7 +134,7 @@ Quickly search across the entire workspace and locate files or content without l
 ## Source Control
 
 <p align="center">
-<img src="assets/screenshots/source-control.png" width="50%">
+<img src="assets/screenshots/source-control.png" width="25%">
 </p>
 
 Track repository changes, stage files, write commit messages, and manage Git workflows directly inside BS Code.
@@ -154,7 +154,7 @@ Authenticate securely using GitHub OAuth Device Flow without embedding secrets o
 ## Publish Repository
 
 <p align="center">
-<img src="assets/screenshots/publish.png" width="50%">
+<img src="assets/screenshots/publish.png" width="25%">
 </p>
 
 Create and publish repositories to GitHub without leaving the editor.
