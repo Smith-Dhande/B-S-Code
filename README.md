@@ -229,6 +229,7 @@ Native APIs
 
 ### Layer Responsibilities
 <div align="center">
+  
 | Layer | Responsibility |
 |---------|----------------|
 | **Renderer** | User interface, components, editor layout, and interactions. |
@@ -237,6 +238,7 @@ Native APIs
 | **Electron IPC** | Secure communication between the renderer and main process. |
 | **Main Process** | Access to native operating system functionality. |
 | **Native APIs** | Filesystem, Git, Terminal, Child Processes, Secure Storage, and OS integrations. |
+
 </div >
 ---
 
