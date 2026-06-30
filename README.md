@@ -49,6 +49,7 @@ BS Code is a personal project built to explore the architecture behind modern ID
 
 Built with Electron, Monaco Editor, Git, GitHub, an embedded terminal, and local AI, BS Code has evolved from a simple browser-based editor into a full desktop IDE and continues to grow toward its first public alpha release.
 
+
 ---
 
 # Why the name "BS Code"?
@@ -61,21 +62,24 @@ It originally started as a joke, but the project quickly became much more than t
 
 Today, **BS Code** represents a hands-on journey into desktop software engineering—building complex systems from scratch to understand how professional developer tools actually work under the hood.
 
+By the Way BS Code Stands For **Beyond Syntax Code** — where writing code is just the first step.
+Debugging your own IDE was never part of the original plan. 
+
 ---
 
 # ✨ Highlights
 
-- 🖥 Desktop application built with **Electron**
-- 📝 Monaco Editor integration
-- 📂 Workspace Explorer with real folder access
-- 🌳 Integrated Git Source Control
-- ☁️ GitHub OAuth Device Flow authentication
-- 🤖 Local AI Assistant powered by Ollama
-- 💻 Embedded Terminal
-- 🔍 Project-wide Search & Replace
-- ⚡ Live HTML/CSS/JavaScript Preview
-- 📦 Windows Installer
-- 🎨 Modern IDE-inspired interface
+- Desktop application built with **Electron**
+- Monaco Editor integration
+- Workspace Explorer with real folder access
+- Integrated Git Source Control
+- GitHub OAuth Device Flow authentication
+- Local AI Assistant powered by Ollama
+- Embedded Terminal
+- Project-wide Search & Replace
+- Live HTML/CSS/JavaScript Preview
+- Windows Installer
+- Modern IDE-inspired interface
 
 ---
 
