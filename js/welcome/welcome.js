@@ -272,14 +272,7 @@ async function renderEnvironmentChecks() {
                 btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Checking...`;
                 setTimeout(() => renderEnvironmentChecks(), 500);
             } else if (check.target === "github") {
-                const gitViewBtn = document.getElementById("git-view-btn");
-                if (gitViewBtn) {
-                    gitViewBtn.click();
-                    setTimeout(() => {
-                        const publishBtn = document.getElementById("git-publish-btn");
-                        if (publishBtn) publishBtn.click();
-                    }, 200);
-                }
+                showGitHubLoginModal();
             }
         };
     });
@@ -366,6 +359,166 @@ function showShortcutsModal() {
             modalContainer.innerHTML = "";
         }
     };
+}
+
+async function showGitHubLoginModal() {
+    const modalContainer = document.getElementById("modal-container");
+    if (!modalContainer) return;
+
+    // Show initial loading state in the modal
+    modalContainer.innerHTML = `
+        <div class="welcome-modal-overlay">
+            <div class="welcome-modal">
+                <div class="welcome-modal-header">
+                    <h2>GitHub Authentication</h2>
+                    <button id="close-github-modal" class="modal-close-btn">&times;</button>
+                </div>
+                <div class="welcome-modal-body" style="align-items: center; text-align: center; gap: 16px;">
+                    <p style="font-size: 13px; color: var(--text-secondary);">Requesting authorization code from GitHub...</p>
+                    <div style="font-size: 14px; color: var(--text-muted);">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Please wait...
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    let isAuthCancelled = false;
+
+    // Handle close button click
+    const closeModal = () => {
+        isAuthCancelled = true;
+        modalContainer.innerHTML = "";
+    };
+
+    document.getElementById("close-github-modal").onclick = closeModal;
+    modalContainer.querySelector(".welcome-modal-overlay").onclick = (e) => {
+        if (e.target.classList.contains("welcome-modal-overlay")) {
+            closeModal();
+        }
+    };
+
+    try {
+        const codeData = await window.github.requestDeviceCode();
+        if (isAuthCancelled) return;
+
+        // Render the code and verification link
+        modalContainer.innerHTML = `
+            <div class="welcome-modal-overlay">
+                <div class="welcome-modal" style="max-width: 440px;">
+                    <div class="welcome-modal-header">
+                        <h2>GitHub Authentication</h2>
+                        <button id="close-github-modal" class="modal-close-btn">&times;</button>
+                    </div>
+                    <div class="welcome-modal-body" style="align-items: center; text-align: center; gap: 16px;">
+                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">
+                            Please authorize BS Code to access your GitHub account.
+                        </p>
+                        
+                        <div id="github-auth-code" style="
+                            font-size: 28px; 
+                            font-weight: 700; 
+                            color: var(--accent-color); 
+                            letter-spacing: 2px;
+                            background: var(--bg-tertiary);
+                            padding: 12px 24px;
+                            border-radius: 6px;
+                            border: 1px solid var(--border-color);
+                            font-family: monospace;
+                            margin: 8px 0;
+                            user-select: all;
+                        ">${codeData.user_code}</div>
+
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 0;">
+                            Copy the code above and enter it at:
+                        </p>
+                        <a href="#" id="github-auth-link" style="
+                            color: var(--accent-color); 
+                            word-break: break-all; 
+                            text-decoration: none; 
+                            font-size: 12px;
+                            font-weight: 500;
+                        ">${codeData.verification_uri}</a>
+
+                        <div style="display: flex; gap: 12px; width: 100%; margin-top: 10px;">
+                            <button id="github-cancel-btn" class="welcome-btn" style="
+                                flex: 1; 
+                                justify-content: center; 
+                                background: transparent; 
+                                border: 1px solid var(--border-color);
+                            ">Cancel</button>
+                            
+                            <button id="github-open-btn" class="welcome-btn" style="
+                                flex: 1; 
+                                justify-content: center; 
+                                background: var(--accent-color); 
+                                color: white;
+                                border: 1px solid var(--accent-color);
+                            ">Copy & Open Browser</button>
+                        </div>
+
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+                            <i class="fa-solid fa-spinner fa-spin"></i> Waiting for authorization...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Bind copy & open link logic
+        const openBrowser = async () => {
+            try {
+                await navigator.clipboard.writeText(codeData.user_code);
+            } catch (err) {
+                console.error("Clipboard copy failed:", err);
+            }
+            window.github.openExternal(codeData.verification_uri);
+        };
+
+        document.getElementById("github-open-btn").onclick = openBrowser;
+        document.getElementById("github-auth-link").onclick = (e) => {
+            e.preventDefault();
+            openBrowser();
+        };
+
+        const handleCancel = () => {
+            closeModal();
+            updateGitStatus();
+        };
+
+        document.getElementById("github-cancel-btn").onclick = handleCancel;
+        document.getElementById("close-github-modal").onclick = handleCancel;
+
+        modalContainer.querySelector(".welcome-modal-overlay").onclick = (e) => {
+            if (e.target.classList.contains("welcome-modal-overlay")) {
+                handleCancel();
+            }
+        };
+
+        // Poll for the authorization token
+        const pollResult = await window.github.pollForToken(codeData.device_code, codeData.interval);
+        if (isAuthCancelled) return;
+
+        if (pollResult.success) {
+            // Close the modal
+            modalContainer.innerHTML = "";
+            alert(`Authenticated successfully as @${pollResult.user.login}!`);
+            
+            // Re-render environment checks and update git panel status
+            renderEnvironmentChecks();
+            updateGitStatus();
+        } else {
+            alert(`Authentication failed: ${pollResult.error}`);
+            closeModal();
+            updateGitStatus();
+        }
+    } catch (err) {
+        if (!isAuthCancelled) {
+            alert(`Authentication error: ${err}`);
+            closeModal();
+            updateGitStatus();
+        }
+    }
 }
 
 function formatTimeAgo(timestamp) {
