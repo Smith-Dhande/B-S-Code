@@ -12,7 +12,13 @@ const {
 
     getGitStatus,
 
-    commit
+    commit,
+
+    init,
+
+    clone,
+
+    commitSelected
 
 } = require(
     "../services/git"
@@ -134,6 +140,42 @@ function registerGitIPC() {
 
         }
 
+    );
+
+    ipcMain.handle(
+        "git:init",
+        async (event, projectPath) => {
+            try {
+                return await init(projectPath);
+            } catch (error) {
+                console.error("IPC git:init Error:", error);
+                throw error;
+            }
+        }
+    );
+
+    ipcMain.handle(
+        "git:clone",
+        async (event, repoUrl, parentPath) => {
+            try {
+                return await clone(repoUrl, parentPath);
+            } catch (error) {
+                console.error("IPC git:clone Error:", error);
+                throw error;
+            }
+        }
+    );
+
+    ipcMain.handle(
+        "git:commitSelected",
+        async (event, projectPath, message, files) => {
+            try {
+                return await commitSelected(projectPath, message, files);
+            } catch (error) {
+                console.error("IPC git:commitSelected Error:", error);
+                throw error;
+            }
+        }
     );
 
 }

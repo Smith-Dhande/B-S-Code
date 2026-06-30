@@ -17,6 +17,10 @@ const {
     registerFilesystemIPC
 } = require("./ipc/filesystem");
 
+const {
+    registerGitHubIPC
+} = require("./ipc/github");
+
 let mainWindow = null;
 
 function createWindow() {
@@ -66,6 +70,8 @@ function createWindow() {
     registerGitIPC();
 
     registerFilesystemIPC();
+
+    registerGitHubIPC();
 
 }
 

@@ -130,6 +130,25 @@ async function commit(
 
 }
 
+async function init(projectPath) {
+    return await executeGitCommand("git init", projectPath);
+}
+
+async function clone(repoUrl, parentPath) {
+    return await executeGitCommand(`git clone "${repoUrl}"`, parentPath);
+}
+
+async function commitSelected(projectPath, message, files) {
+    await executeGitCommand("git reset", projectPath);
+    for (const file of files) {
+        await executeGitCommand(`git add "${file.replace(/"/g, '\\"')}"`, projectPath);
+    }
+    return await executeGitCommand(
+        `git commit -m "${message.replace(/"/g, '\\"')}"`,
+        projectPath
+    );
+}
+
 module.exports = {
 
     isGitRepository,
@@ -138,6 +157,12 @@ module.exports = {
 
     getGitStatus,
 
-    commit
+    commit,
+
+    init,
+
+    clone,
+
+    commitSelected
 
 };

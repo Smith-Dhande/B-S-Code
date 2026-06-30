@@ -136,6 +136,10 @@ function initializeActivityBar() {
                     "git"
                 );
 
+                if (typeof window.updateGitStatus === "function") {
+                    window.updateGitStatus();
+                }
+
             }
         );
 

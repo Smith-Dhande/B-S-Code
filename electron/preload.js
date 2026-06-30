@@ -130,10 +130,49 @@ contextBridge.exposeInMainWorld(
 
             );
 
+        },
+
+        init(projectPath) {
+            return ipcRenderer.invoke("git:init", projectPath);
+        },
+
+        clone(repoUrl, parentPath) {
+            return ipcRenderer.invoke("git:clone", repoUrl, parentPath);
+        },
+
+        commitSelected(projectPath, message, files) {
+            return ipcRenderer.invoke("git:commitSelected", projectPath, message, files);
         }
 
     }
 
+);
+
+contextBridge.exposeInMainWorld(
+    "github",
+    {
+        checkAuth() {
+            return ipcRenderer.invoke("github:checkAuth");
+        },
+        requestDeviceCode() {
+            return ipcRenderer.invoke("github:requestDeviceCode");
+        },
+        pollForToken(deviceCode, intervalSeconds) {
+            return ipcRenderer.invoke("github:pollForToken", deviceCode, intervalSeconds);
+        },
+        createRepo(repoName, isPrivate) {
+            return ipcRenderer.invoke("github:createRepo", repoName, isPrivate);
+        },
+        publishProject(projectPath, repoName, isPrivate, cloneUrl) {
+            return ipcRenderer.invoke("github:publishProject", projectPath, repoName, isPrivate, cloneUrl);
+        },
+        openExternal(url) {
+            return ipcRenderer.invoke("github:openExternal", url);
+        },
+        logout() {
+            return ipcRenderer.invoke("github:logout");
+        }
+    }
 );
 
 contextBridge.exposeInMainWorld(

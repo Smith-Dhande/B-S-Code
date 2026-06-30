@@ -1269,3 +1269,122 @@ font-family:
 .badge-untracked {
     color: #73c991;
 }
+
+.git-action-btn {
+    background-color: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.git-action-btn:hover {
+    opacity: 0.9;
+}
+
+.git-action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.git-action-btn-secondary {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.git-action-btn-secondary:hover {
+    background-color: var(--hover-color);
+}
+
+.git-auth-container, .git-publish-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 4px;
+    color: var(--text-primary);
+    gap: 12px;
+    position: relative;
+    z-index: 1000;
+    pointer-events: auto !important;
+}
+
+.git-auth-code {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+    background: var(--bg-tertiary);
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin: 6px 0;
+    color: var(--accent-color);
+}
+
+.git-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    position: relative;
+    z-index: 1001;
+    pointer-events: auto !important;
+}
+
+.git-form-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.git-form-group input, .git-form-group select {
+    background: var(--bg-tertiary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    width: 100% !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s;
+    cursor: text !important;
+    position: relative;
+    z-index: 1002;
+    pointer-events: auto !important;
+}
+
+.git-form-group select {
+    cursor: pointer !important;
+}
+
+.git-form-group input:focus, .git-form-group select:focus {
+    border-color: var(--accent-color) !important;
+}
+
+.git-form-group select option {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+}
+
+.git-file-checkbox {
+    cursor: pointer;
+    accent-color: var(--accent-color);
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
