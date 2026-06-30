@@ -1,5 +1,6 @@
 const state = {
     selectedFolder: null,
+    projectPath: null,
     folderStructure: [],
     activeFile: null,
     selectedExplorerItem: null,
@@ -9,12 +10,11 @@ const state = {
     openTabs: [],
     currentModel: null,
     chatHistory: [],
-    currentView:"explorer",
+    currentView: "explorer",
     isOpeningFile: false,
     isModified: false,
     modifiedFiles: [],
     isCreatingFile: false,
     isCreatingFolder: false
 };
-
 export { state };

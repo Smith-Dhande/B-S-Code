@@ -104,3 +104,23 @@ contextBridge.exposeInMainWorld(
     }
 
 );
+
+contextBridge.exposeInMainWorld(
+
+    "filesystem",
+
+    {
+
+        openFolder() {
+
+            return ipcRenderer.invoke(
+
+                "filesystem:openFolder"
+
+            );
+
+        }
+
+    }
+
+);
