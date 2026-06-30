@@ -449,23 +449,6 @@ The long-term vision for BS Code.
 
 ---
 
-# 📚 Documentation
-
-Additional documentation is being written as the project evolves.
-
-| Document | Description |
-|----------|-------------|
-| `docs/ARCHITECTURE.md` | Overall application architecture |
-| `docs/FILESYSTEM.md` | Workspace & File System design |
-| `docs/GIT.md` | Git implementation |
-| `docs/GITHUB.md` | GitHub authentication & publishing |
-| `docs/TERMINAL.md` | Embedded terminal architecture |
-| `docs/AI.md` | Ollama integration |
-| `docs/IPC.md` | Electron IPC communication |
-| `docs/CONTRIBUTING.md` | Contribution guidelines |
-
----
-
 # 🤝 Contributing
 
 Contributions, suggestions, feature requests, and bug reports are always welcome.
