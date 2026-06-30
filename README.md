@@ -134,7 +134,7 @@ Quickly search across the entire workspace and locate files or content without l
 ## Source Control
 
 <p align="center">
-<img src="assets/screenshots/source-control.png" width="100%">
+<img src="assets/screenshots/source-control.png" width="50%">
 </p>
 
 Track repository changes, stage files, write commit messages, and manage Git workflows directly inside BS Code.
@@ -154,7 +154,7 @@ Authenticate securely using GitHub OAuth Device Flow without embedding secrets o
 ## Publish Repository
 
 <p align="center">
-<img src="assets/screenshots/publish.png" width="100%">
+<img src="assets/screenshots/publish.png" width="50%">
 </p>
 
 Create and publish repositories to GitHub without leaving the editor.
@@ -228,7 +228,7 @@ Native APIs
 ```
 
 ### Layer Responsibilities
-
+<div align="center">
 | Layer | Responsibility |
 |---------|----------------|
 | **Renderer** | User interface, components, editor layout, and interactions. |
@@ -237,7 +237,7 @@ Native APIs
 | **Electron IPC** | Secure communication between the renderer and main process. |
 | **Main Process** | Access to native operating system functionality. |
 | **Native APIs** | Filesystem, Git, Terminal, Child Processes, Secure Storage, and OS integrations. |
-
+</div >
 ---
 
 # 📂 Hybrid Filesystem Architecture
@@ -245,6 +245,7 @@ Native APIs
 BS Code intentionally combines **Browser APIs** with **Electron APIs** instead of routing every operation through Electron.
 
 This approach keeps file editing lightweight while allowing privileged operations to remain secure.
+<div align="center">
 
 | Component | Technology |
 |-----------|------------|
@@ -254,6 +255,7 @@ This approach keeps file editing lightweight while allowing privileged operation
 | Embedded Terminal | Electron |
 | GitHub Authentication | Electron |
 | Native File Operations | Electron |
+</div>
 
 This hybrid architecture allows the editor to remain responsive while still supporting native desktop capabilities such as Git, Terminal, and GitHub integration.
 
