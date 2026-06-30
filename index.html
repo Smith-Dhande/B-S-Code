@@ -1,396 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BS Code</title>
-  <link rel="shortcut icon" href="assets/icons/icon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
-  <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-    <div id="app">
-        <!-- Top Bar -->
-        <header id="top-bar" class="top-bar">
-            <div id="brand-area" class="brand-area">
-
-                <div class="logo-container">
-                    <img
-                        src="assets/logos/BSCodeLogo.png"
-                        alt="BS Code Logo"
-                        class="brand-logo"
-                    >
-                    <div class="brand-actions">
-                    <button id="open-folder-button" class="top-bar-button">
-                        Open Folder
-                    </button>
-
-                    <button id="save-button" class="top-bar-button">
-                        Save
-                    </button>
-
-                    <button id="new-file-button" class="top-bar-button">
-                        New File
-                    </button>
-
-                    <button id="new-folder-button" class="top-bar-button">
-                        New Folder
-                    </button>
-
-                    <button id="theme-toggle-button" class="top-bar-button">
-                        Dark Mode
-                    </button>
-                </div>
-
-                    
-                </div>
-
-                
-            </div>
-            
-
-            <nav id="top-bar-actions" class="top-bar-actions">
-                
-
-                <label class="model-selector-label" for="model-selector">Model</label>
-                <select id="model-selector" class="model-selector" name="model">
-                    <option value="">Select model</option>
-                </select>
-            </nav>
-        </header>
-
-        <main id="ide-main" class="ide-main">
-
-    <div id="workspace">
-
-        <!-- Activity Bar -->
-
-        <aside id="activity-bar">
-
-            <button
-                id="explorer-view-btn"
-                class="activity-button active"
-                title="Explorer"
-            >
-                <i class="fa-solid fa-folder"></i>
-            </button>
-
-            <button
-                id="search-view-btn"
-                class="activity-button"
-                title="Search"
-            >
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-
-            <button
-                id="git-view-btn"
-                class="activity-button"
-                title="Source Control"
-            >
-                <i class="fa-brands fa-github"></i>
-            </button>
-
-            <button
-                id="run-button"
-                class="activity-button"
-                title="Run & Debug"
-            >
-                <i class="fa-solid fa-play"></i>
-            </button>
-
-            
-            </button>
-            <button
-                id="terminal-view-btn"
-                class="activity-button"
-            >
-                <i class="fa-solid fa-terminal"></i>
-            </button>
-            <div class="activity-spacer"></div>
-
-            <button
-                id="settings-btn"
-                class="activity-button"
-                title="Settings"
-                style="margin-top: auto; margin-bottom: 12px;"
-            >
-                <i class="fa-solid fa-gear"></i>
-            </button>
-
-        </aside>
-
-        <!-- File Explorer -->
-            <div id="sidebar-panel">
-                <aside id="file-explorer" class="file-explorer">
-                <!-- File Explorer -->
-                
-                <header id="explorer-header" class="explorer-header">
-                    <h2 class="explorer-title">Explorer</h2>
-                    <div class="explorer-actions">
-                        <button id="explorer-new-file-button">+</button>
-                        <button id="explorer-new-folder-button">📁</button>
-                        <button id="delete-button">🗑️</button>
-                        <button id="refresh-project-button">↻</button>
-                    </div>
-                </header>
-
-                <section id="project-info" class="project-info">
-                    <h3 id="project-name" class="project-name">Welcome to BS Code</h3>
-                </section>
-
-                <section id="file-tree-container" class="file-tree-container">
-                </section>
-                </aside>
-
-                <aside
-                    id="search-panel"
-                    class="search-panel"
-                    hidden
-                >
-            
-                    <header
-                        class="search-header"
-                    >
-
-                        <h2>
-                            Search
-                        </h2>
-
-                    </header>
-
-                    <div
-                        class="search-container"
-                    >
-
-                        <input
-                            id="search-input"
-                            type="text"
-                            placeholder="Search"
-                        >
-
-                        <input
-                            id="replace-input"
-                            type="text"
-                            placeholder="Replace"
-                        >
-
-                        <button
-                            id="replace-all-button"
-                        >
-                            Replace All
-                        </button>
-
-                    </div>
-
-                    <div
-                        id="search-results"
-                    >
-                    </div>
-
-                </aside>
-
-
-                <aside
-    id="git-panel"
-    class="git-panel"
-    hidden
->
-
-    <header
-        class="git-header"
-    >
-
-        <h2>
-            Source Control
-        </h2>
-
-    </header>
-
-    <section
-        class="git-section"
-    >
-
-        <div
-            class="git-empty-state"
-        >
-
-            <i
-                class="fa-solid fa-code-branch"
-            ></i>
-
-            <h3>
-                Source Control
-            </h3>
-
-            <p>
-                Open a Git repository to begin tracking changes.
-            </p>
-
-        </div>
-
-    </section>
-
-</aside>
-                </div>
-               <!-- Editor Section -->
-                <section
-                    id="editor-section"
-                    class="editor-section"
-                >
-
-                    <header
-                        id="tabs-container"
-                        class="tabs-container"
-                    >
-
-                        <div
-                            id="tabs-placeholder"
-                        >
-
-                            Ready to build something amazing?
-
-                        </div>
-
-                    </header>
-
-                    <section
-                        id="main-editor-container"
-                        class="main-editor-container"
-                    >
-
-                        <div id="welcome-screen" class="welcome-screen" hidden></div>
-                        <div
-                            id="editor"
-                        ></div>
-
-                    </section>
-
-                    <section
-                        id="split-editor-container"
-                        class="split-editor-container"
-                        hidden
-                    >
-                    </section>
-
-                    <!-- Terminal -->
-                    <section
-                    id="terminal-container"
-                    hidden
-                >
-
-                    <div
-                    id="terminal-header"
-                >
-
-                    <span>
-                        TERMINAL
-                    </span>
-
-                    <button
-                        id="close-terminal-button"
-                    >
-                        ×
-                    </button>
-
-                </div>
-                    <div
-                        id="terminal-output"
-                    >
-                    </div>
-
-                    <div
-                        id="terminal-input-container"
-                    >
-
-                        <span
-                            id="terminal-prompt"
-                        >
-                            >
-                        </span>
-
-                        <input
-                            id="terminal-input"
-                            type="text"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-                </section>
-
-                </section>
-                <!-- AI Assistant Panel -->
-                <aside id="ai-assistant-panel" class="ai-assistant-panel">
-                <header id="ai-header" class="ai-header">
-                    <h2 class="ai-title">AI Assistant</h2>
-                    <!-- <button id="new-chat-btn">
-                        New Chat
-                    </button> -->
-                </header>
-
-                <section id="model-information" class="model-information">
-                    <p id="active-model" class="active-model">No model selected</p>
-                </section>
-
-                
-
-                <section id="chat-history" class="chat-history">
-
-                    <div class="welcome-card">
-
-                        <h3>👋 Welcome to BS Code</h3>
-
-                        <p>
-                            Your AI-powered development environment.
-                        </p>
-
-                        <ul>
-                            <li>Create projects with natural language</li>
-                            <li>Generate code instantly</li>
-                            <li>Fix bugs and refactor files</li>
-                            <li>Build faster with local AI models</li>
-                        </ul>
-
-                    </div>
-
-                </section>
-
-                <section id="prompt-input-container" class="prompt-input-container">
-                    <label class="prompt-input-label" for="prompt-input">Prompt</label>
-                    <textarea id="prompt-input" class="prompt-input" name="prompt" rows="3" placeholder="Ask BS Code..."></textarea>
-                    <button id="send-prompt-button" class="send-prompt-button" type="button">Send</button>
-                </section>
-                </aside>
-            </div>
-        </main>
-        <div id="settings-dropdown" class="settings-dropdown" hidden>
-            <div class="settings-item" id="set-show-welcome">
-                <i></i> Show Welcome on Startup
-            </div>
-            <div class="settings-item" id="set-open-welcome">
-                <i class="fa-solid fa-circle-info"></i> Show Welcome Screen Now
-            </div>
-            <div class="settings-item" id="set-clear-recent">
-                <i class="fa-solid fa-trash-can"></i> Clear Recent Projects
-            </div>
-        </div>
-        <div id="notifications-container">
-        </div>
-        <div id="modal-container"></div>
-
-
-        <!-- Status Bar -->
-        <footer id="status-bar" class="status-bar">
-            <span id="current-file-status" class="status-item current-file-status">Ready</span>
-            <span id="current-model-status" class="status-item current-model-status">model Offline</span>
-            <span id="save-status" class="status-item save-status">Unsaved</span>
-            <span id="cursor-position" class="status-item cursor-position">Ln 1, Col 1</span>
-        </footer>
-    </div>
-    <script src="./vendor/monaco/vs/loader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
-    <script type="module" src="./js/app.js"></script>
-
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>BS Code</title>
+		<link rel="shortcut icon" href="assets/icons/icon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<div id="app">
+			<!-- Top Bar -->
+			<header id="top-bar" class="top-bar">
+				<div id="brand-area" class="brand-area">
+					<div class="logo-container">
+						<img
+							src="assets/logos/BSCodeLogo.png"
+							alt="BS Code Logo"
+							class="brand-logo"
+							>
+						<div class="brand-actions">
+							<button id="open-folder-button" class="top-bar-button">
+							Open Folder
+							</button>
+							<button id="save-button" class="top-bar-button">
+							Save
+							</button>
+							<button id="new-file-button" class="top-bar-button">
+							New File
+							</button>
+							<button id="new-folder-button" class="top-bar-button">
+							New Folder
+							</button>
+							<button id="theme-toggle-button" class="top-bar-button">
+							Dark Mode
+							</button>
+						</div>
+					</div>
+				</div>
+				<nav id="top-bar-actions" class="top-bar-actions">
+					<label class="model-selector-label" for="model-selector">Model</label>
+					<select id="model-selector" class="model-selector" name="model">
+						<option value="">Select model</option>
+					</select>
+				</nav>
+			</header>
+			<main id="ide-main" class="ide-main">
+				<div id="workspace">
+					<!-- Activity Bar -->
+					<aside id="activity-bar">
+						<button
+							id="explorer-view-btn"
+							class="activity-button active"
+							title="Explorer"
+							>
+						<i class="fa-solid fa-folder"></i>
+						</button>
+						<button
+							id="search-view-btn"
+							class="activity-button"
+							title="Search"
+							>
+						<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+						<button
+							id="git-view-btn"
+							class="activity-button"
+							title="Source Control"
+							>
+						<i class="fa-brands fa-github"></i>
+						</button>
+						<button
+							id="run-button"
+							class="activity-button"
+							title="Run & Debug"
+							>
+						<i class="fa-solid fa-play"></i>
+						</button>
+						</button>
+						<button
+							id="terminal-view-btn"
+							class="activity-button"
+							>
+						<i class="fa-solid fa-terminal"></i>
+						</button>
+						<div class="activity-spacer"></div>
+						<button
+							id="settings-btn"
+							class="activity-button"
+							title="Settings"
+							style="margin-top: auto; margin-bottom: 12px;"
+							>
+						<i class="fa-solid fa-gear"></i>
+						</button>
+					</aside>
+					<!-- File Explorer -->
+					<div id="sidebar-panel">
+						<aside id="file-explorer" class="file-explorer">
+							<!-- File Explorer -->
+							<header id="explorer-header" class="explorer-header">
+								<h2 class="explorer-title">Explorer</h2>
+								<div class="explorer-actions">
+									<button id="explorer-new-file-button">+</button>
+									<button id="explorer-new-folder-button">📁</button>
+									<button id="delete-button">🗑️</button>
+									<button id="refresh-project-button">↻</button>
+								</div>
+							</header>
+							<section id="project-info" class="project-info">
+								<h3 id="project-name" class="project-name">Welcome to BS Code</h3>
+							</section>
+							<section id="file-tree-container" class="file-tree-container">
+							</section>
+						</aside>
+						<aside
+							id="search-panel"
+							class="search-panel"
+							hidden
+							>
+							<header
+								class="search-header"
+								>
+								<h2>
+									Search
+								</h2>
+							</header>
+							<div
+								class="search-container"
+								>
+								<input
+									id="search-input"
+									type="text"
+									placeholder="Search"
+									>
+								<input
+									id="replace-input"
+									type="text"
+									placeholder="Replace"
+									>
+								<button
+									id="replace-all-button"
+									>
+								Replace All
+								</button>
+							</div>
+							<div
+								id="search-results"
+								>
+							</div>
+						</aside>
+						<aside
+							id="git-panel"
+							class="git-panel"
+							hidden
+							>
+							<header
+								class="git-header"
+								>
+								<h2>
+									Source Control
+								</h2>
+							</header>
+							<section
+								class="git-section"
+								>
+								<div
+									class="git-empty-state"
+									>
+									<i
+										class="fa-solid fa-code-branch"
+										></i>
+									<h3>
+										Source Control
+									</h3>
+									<p>
+										Open a Git repository to begin tracking changes.
+									</p>
+								</div>
+							</section>
+						</aside>
+					</div>
+					<!-- Editor Section -->
+					<section
+						id="editor-section"
+						class="editor-section"
+						>
+						<header
+							id="tabs-container"
+							class="tabs-container"
+							>
+							<div
+								id="tabs-placeholder"
+								>
+								Ready to build something amazing?
+							</div>
+						</header>
+						<section
+							id="main-editor-container"
+							class="main-editor-container"
+							>
+							<div id="welcome-screen" class="welcome-screen" hidden></div>
+							<div
+								id="editor"
+								></div>
+						</section>
+						<section
+							id="split-editor-container"
+							class="split-editor-container"
+							hidden
+							>
+						</section>
+						<!-- Terminal -->
+						<section
+							id="terminal-container"
+							hidden
+							>
+							<div
+								id="terminal-header"
+								>
+								<span>
+								TERMINAL
+								</span>
+								<button
+									id="close-terminal-button"
+									>
+								×
+								</button>
+							</div>
+							<div
+								id="terminal-output"
+								>
+							</div>
+							<div
+								id="terminal-input-container"
+								>
+								<span
+									id="terminal-prompt"
+									>
+								>
+								</span>
+								<input
+									id="terminal-input"
+									type="text"
+									autocomplete="off"
+									>
+							</div>
+						</section>
+					</section>
+					<!-- AI Assistant Panel -->
+					<aside id="ai-assistant-panel" class="ai-assistant-panel">
+						<header id="ai-header" class="ai-header">
+							<h2 class="ai-title">AI Assistant</h2>
+							<!-- <button id="new-chat-btn">
+								New Chat
+								</button> -->
+						</header>
+						<section id="model-information" class="model-information">
+							<p id="active-model" class="active-model">No model selected</p>
+						</section>
+						<section id="chat-history" class="chat-history">
+							<div class="welcome-card">
+								<h3>👋 Welcome to BS Code</h3>
+								<p>
+									Your AI-powered development environment.
+								</p>
+								<ul>
+									<li>Create projects with natural language</li>
+									<li>Generate code instantly</li>
+									<li>Fix bugs and refactor files</li>
+									<li>Build faster with local AI models</li>
+								</ul>
+							</div>
+						</section>
+						<section id="prompt-input-container" class="prompt-input-container">
+							<label class="prompt-input-label" for="prompt-input">Prompt</label>
+							<textarea id="prompt-input" class="prompt-input" name="prompt" rows="3" placeholder="Ask BS Code..."></textarea>
+							<button id="send-prompt-button" class="send-prompt-button" type="button">Send</button>
+						</section>
+					</aside>
+				</div>
+			</main>
+			<div id="settings-dropdown" class="settings-dropdown" hidden>
+				<div class="settings-item" id="set-show-welcome">
+					<i></i> Show Welcome on Startup
+				</div>
+				<div class="settings-item" id="set-open-welcome">
+					<i class="fa-solid fa-circle-info"></i> Show Welcome Screen Now
+				</div>
+				<div class="settings-item" id="set-clear-recent">
+					<i class="fa-solid fa-trash-can"></i> Clear Recent Projects
+				</div>
+			</div>
+			<div id="notifications-container">
+			</div>
+			<div id="modal-container"></div>
+			<!-- Status Bar -->
+			<footer id="status-bar" class="status-bar">
+				<span id="current-file-status" class="status-item current-file-status">Ready</span>
+				<span id="current-model-status" class="status-item current-model-status">model Offline</span>
+				<span id="save-status" class="status-item save-status">Unsaved</span>
+				<span id="cursor-position" class="status-item cursor-position">Ln 1, Col 1</span>
+			</footer>
+		</div>
+		<script src="./vendor/monaco/vs/loader.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+		<script type="module" src="./js/app.js"></script>
+	</body>
 </html>
