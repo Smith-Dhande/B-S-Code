@@ -1,7 +1,16 @@
 const {
-    ipcMain,
-    dialog
+    ipcMain
 } = require("electron");
+
+const {
+
+    openFolder,
+
+    readDirectory
+
+} = require(
+    "../services/filesystem"
+);
 
 function registerFilesystemIPC() {
 
@@ -11,29 +20,29 @@ function registerFilesystemIPC() {
 
         async () => {
 
-            const result =
-                await dialog.showOpenDialog({
+            return await openFolder();
 
-                    properties: [
-                        "openDirectory"
-                    ]
+        }
 
-                });
+    );
 
-            if (
-                result.canceled
-            ) {
+    ipcMain.handle(
 
-                return null;
+        "filesystem:readDirectory",
 
-            }
+        async (
 
-            return {
+            event,
 
-                path:
-                    result.filePaths[0]
+            directoryPath
 
-            };
+        ) => {
+
+            return await readDirectory(
+
+                directoryPath
+
+            );
 
         }
 

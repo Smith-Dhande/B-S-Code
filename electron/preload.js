@@ -23,6 +23,20 @@ contextBridge.exposeInMainWorld(
 
         },
 
+        changeDirectory(
+            path
+        ) {
+
+            return ipcRenderer.invoke(
+
+                "terminal:changeDirectory",
+
+                path
+
+            );
+
+        },
+
         onOutput(
             callback
         ) {
@@ -116,6 +130,20 @@ contextBridge.exposeInMainWorld(
             return ipcRenderer.invoke(
 
                 "filesystem:openFolder"
+
+            );
+
+        },
+
+        readDirectory(
+            directoryPath
+        ) {
+
+            return ipcRenderer.invoke(
+
+                "filesystem:readDirectory",
+
+                directoryPath
 
             );
 
