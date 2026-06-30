@@ -41,19 +41,13 @@ Build, edit, debug, commit, and experiment — while learning how modern develop
 
 # Why BS Code?
 
-Every developer has built a To-Do app.
+## Why BS Code?
 
-Many have built a CRUD application.
+Most developers build web applications. I wanted to understand how professional desktop developer tools are engineered.
 
-Very few build a desktop IDE.
+BS Code is a personal project built to explore the architecture behind modern IDEs—not to replace Visual Studio Code or Cursor, but to learn by implementing the systems that power them.
 
-BS Code started as a challenge to understand **how professional developer tools are engineered**, not just how they're used.
-
-The objective was never to compete with Visual Studio Code or Cursor.
-
-Instead, the project focuses on implementing the systems behind modern IDEs—desktop architecture, editor integration, Git workflows, GitHub authentication, embedded terminals, workspace management, and local AI—while following production-oriented software engineering practices.
-
-Today, BS Code has grown from a simple browser-based editor into a full desktop application powered by Electron and continues to evolve toward its first public alpha release.
+Built with Electron, Monaco Editor, Git, GitHub, an embedded terminal, and local AI, BS Code has evolved from a simple browser-based editor into a full desktop IDE and continues to grow toward its first public alpha release.
 
 ---
 
