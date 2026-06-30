@@ -2,6 +2,8 @@ import { state } from "../state.js";
 import { renderTabs }from "../tabs/renderTabs.js";
 import { getEditor } from "../editor/monaco.js";
 import { refreshPreview }from "../run/refreshPreview.js";
+import { updateGitStatus } from "../git/gitStatus.js";
+
 async function saveFile() {
 
     if (!state.activeFile) {
@@ -53,6 +55,8 @@ async function saveFile() {
     console.log(
         "File saved successfully"
     );
+
+    await updateGitStatus();
 
 }
 catch (error) {

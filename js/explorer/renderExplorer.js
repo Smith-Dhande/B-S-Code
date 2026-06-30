@@ -9,6 +9,8 @@ import { createFileByName } from "./createFile.js";
 
 import { createFolderByName } from "./createFolder.js";
 
+import { updateGitStatus } from "../git/gitStatus.js";
+
 function renderExplorer() {
 
     const fileTreeContainer =
@@ -105,6 +107,46 @@ function renderItems(
                 "explorer-item"
             );
 
+            // Git decorations and badges
+            const itemPath = item.path.replace(/\\/g, '/');
+            let gitClass = '';
+            let gitBadge = '';
+
+            if (item.type === 'file') {
+                const gitInfo = state.gitStatus && state.gitStatus.find(f => f.path.replace(/\\/g, '/').toLowerCase() === itemPath.toLowerCase());
+                if (gitInfo) {
+                    console.log("Git Match Found in Explorer:", itemPath, "Status:", gitInfo.status);
+                    if (gitInfo.status === 'M') {
+                        gitClass = 'git-m';
+                        gitBadge = '<span class="git-explorer-badge git-badge-m">M</span>';
+                    } else if (gitInfo.status === 'U') {
+                        gitClass = 'git-u';
+                        gitBadge = '<span class="git-explorer-badge git-badge-u">U</span>';
+                    } else if (gitInfo.status === 'A') {
+                        gitClass = 'git-a';
+                        gitBadge = '<span class="git-explorer-badge git-badge-a">A</span>';
+                    } else if (gitInfo.status === 'D') {
+                        gitClass = 'git-d';
+                        gitBadge = '<span class="git-explorer-badge git-badge-d">D</span>';
+                    }
+                }
+            } else if (item.type === 'directory') {
+                const childrenGit = state.gitStatus && state.gitStatus.filter(f => f.path.replace(/\\/g, '/').toLowerCase().startsWith(itemPath.toLowerCase() + '/'));
+                if (childrenGit && childrenGit.length > 0) {
+                    if (childrenGit.some(f => f.status === 'M')) {
+                        gitClass = 'git-child-m';
+                    } else if (childrenGit.some(f => f.status === 'A')) {
+                        gitClass = 'git-child-a';
+                    } else if (childrenGit.some(f => f.status === 'U')) {
+                        gitClass = 'git-child-u';
+                    }
+                }
+            }
+
+            if (gitClass) {
+                explorerItem.classList.add(gitClass);
+            }
+
             explorerItem.style.paddingLeft =
                 `${level * 20}px`;
 
@@ -137,6 +179,7 @@ function renderItems(
     <span class="explorer-item-name">
         ${item.name}
     </span>
+    ${gitBadge}
 `;
 
             explorerItem.addEventListener(
@@ -353,6 +396,7 @@ state.folderStructure =
     );
 
             renderExplorer();
+            updateGitStatus();
 
         }
     );

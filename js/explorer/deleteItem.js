@@ -1,10 +1,12 @@
 import { state } from "../state.js";
 import {
-getFolderContent
+getFolderContent,
+getExpandedFolders
 } from "../filesystem/openFolder.js";
 import {
 renderExplorer
 } from "./renderExplorer.js";
+import { updateGitStatus } from "../git/gitStatus.js";
 
 async function deleteItem() {
 
@@ -55,6 +57,7 @@ state.selectedExplorerItem =
     null;
 
 renderExplorer();
+await updateGitStatus();
 
 }
 

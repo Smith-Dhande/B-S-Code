@@ -107,12 +107,37 @@ async function getGitStatus(
 
 }
 
+async function commit(
+    projectPath,
+    message
+) {
+
+    await executeGitCommand(
+
+        "git add .",
+
+        projectPath
+
+    );
+
+    return await executeGitCommand(
+
+        `git commit -m "${message.replace(/"/g, '\\"')}"`,
+
+        projectPath
+
+    );
+
+}
+
 module.exports = {
 
     isGitRepository,
 
     getCurrentBranch,
 
-    getGitStatus
+    getGitStatus,
+
+    commit
 
 };

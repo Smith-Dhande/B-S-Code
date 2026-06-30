@@ -61,9 +61,15 @@ function registerTerminalIPC(
 
         ) => {
 
-            executeCommand(
-                command
-            );
+            try {
+                executeCommand(
+                    command
+                );
+            } catch (error) {
+                console.error("IPC terminal:execute Error in main process:", error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 
@@ -81,9 +87,15 @@ function registerTerminalIPC(
 
         ) => {
 
-            changeDirectory(
-                path
-            );
+            try {
+                changeDirectory(
+                    path
+                );
+            } catch (error) {
+                console.error(`IPC terminal:changeDirectory Error in main process for path ${path}:`, error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 

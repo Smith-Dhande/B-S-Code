@@ -1034,3 +1034,238 @@ font-family:
     display:none !important;
 
 }
+
+/* Explorer Git Decoration Colors */
+.explorer-item.git-m .explorer-item-name,
+.explorer-item.git-child-m .explorer-item-name {
+    color: #e2c08d !important;
+}
+
+.explorer-item.git-u .explorer-item-name,
+.explorer-item.git-child-u .explorer-item-name {
+    color: #73c991 !important;
+}
+
+.explorer-item.git-a .explorer-item-name,
+.explorer-item.git-child-a .explorer-item-name {
+    color: #73c991 !important;
+}
+
+.explorer-item.git-d .explorer-item-name {
+    color: #c74e39 !important;
+    text-decoration: line-through;
+}
+
+.git-explorer-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: bold;
+    margin-right: 8px;
+    opacity: 0.8;
+}
+
+.git-badge-m {
+    color: #e2c08d;
+}
+
+.git-badge-u {
+    color: #73c991;
+}
+
+.git-badge-a {
+    color: #73c991;
+}
+
+.git-badge-d {
+    color: #c74e39;
+}
+
+/* Source Control Repo Detected State Styles */
+.git-section.repo-detected {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 12px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.git-repo-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.git-repo-title {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.git-commit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#git-commit-message {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 8px;
+    border-radius: 4px;
+    resize: none;
+    font-size: 12px;
+    font-family: inherit;
+    width: 100%;
+}
+
+#git-commit-message:focus {
+    outline: 1px solid var(--accent-color);
+}
+
+.git-commit-btn {
+    background-color: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.git-commit-btn:hover {
+    opacity: 0.9;
+}
+
+.git-commit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.git-changes-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.git-no-changes {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 20px 0;
+}
+
+.git-status-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.git-status-group-header {
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}
+
+.git-group-count {
+    background: var(--bg-tertiary);
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+.git-status-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.git-file-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    user-select: none;
+}
+
+.git-file-item:hover {
+    background-color: var(--hover-color);
+}
+
+.git-file-icon {
+    color: var(--text-muted);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.git-file-name {
+    color: var(--text-primary);
+    font-weight: 550;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 4px;
+}
+
+.git-file-path {
+    color: var(--text-muted);
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left;
+}
+
+.git-file-badge {
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 3px;
+    min-width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.badge-added {
+    color: #73c991;
+}
+
+.badge-modified {
+    color: #e2c08d;
+}
+
+.badge-deleted {
+    color: #c74e39;
+}
+
+.badge-untracked {
+    color: #73c991;
+}

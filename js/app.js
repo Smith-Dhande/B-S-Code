@@ -1,40 +1,42 @@
-import { selectFolder }from "./filesystem/openFolder.js";
+import { selectFolder } from "./filesystem/openFolder.js";
 
 import { runProject } from "./run/runProject.js";
 
 import { resolvePath } from "./run/resolvePath.js";
 
-import { initializeTheme }from "./ui/theme.js";
+import { initializeTheme } from "./ui/theme.js";
 
-import { initializeSearch }from "./search/searchEvents.js";
+import { initializeSearch } from "./search/searchEvents.js";
 
 import { loadFolderHandle } from "./filesystem/folderHandleStorage.js";
 
-import { initializeActivityBar}from "./ui/activityBar.js";
+import { initializeActivityBar } from "./ui/activityBar.js";
 
-import { getFolderContent }from "./filesystem/openFolder.js";
+import { getFolderContent } from "./filesystem/openFolder.js";
 
-import { createEditor }from "./editor/monaco.js";
+import { createEditor } from "./editor/monaco.js";
 
-import { saveFile }from "./filesystem/saveFile.js";
+import { saveFile } from "./filesystem/saveFile.js";
 
-import { createFile }from "./explorer/createFile.js";
+import { createFile } from "./explorer/createFile.js";
 
-import { createFolder }from "./explorer/createFolder.js";
+import { createFolder } from "./explorer/createFolder.js";
 
-import { deleteItem }from "./explorer/deleteItem.js";
+import { deleteItem } from "./explorer/deleteItem.js";
 
-import { renderExplorer }from "./explorer/renderExplorer.js";
+import { renderExplorer } from "./explorer/renderExplorer.js";
 
-import { loadModels }from "./ai/models.js";
+import { loadModels } from "./ai/models.js";
 
-import { initializeChat }from "./ai/chat.js";
+import { initializeChat } from "./ai/chat.js";
 
-import { state }from "./state.js";
+import { state } from "./state.js";
 
 import { renderTabs } from "./tabs/renderTabs.js";
 
-import { initializeTerminal }from "./terminal/terminal.js";
+import { initializeTerminal } from "./terminal/terminal.js";
+
+import { updateGitStatus, startGitStatusPoller } from "./git/gitStatus.js";
 
 window.resolvePath = resolvePath;
 window.state = state;
@@ -100,6 +102,7 @@ function initializeExplorerActions() {
                 );
 
             renderExplorer();
+            await updateGitStatus();
 
         }
     );
@@ -107,118 +110,120 @@ function initializeExplorerActions() {
 }
 
 async function initializeApp() {
+    try {
+        createEditor();
+        initializeTheme();
+        renderTabs();
+        initializeActivityBar();
+        initializeSearch();
+        initializeTerminal();
 
-    createEditor();
-    initializeTheme();
-    renderTabs();
-    initializeActivityBar();
-    initializeSearch();
-    initializeTerminal();
+        const savedFolder =
+            await loadFolderHandle();
 
-    const savedFolder =
-    await loadFolderHandle();
-
-if (
-    savedFolder
-) {
-
-    const permission =
-        await savedFolder.queryPermission({
-            mode: "readwrite"
-        });
-
-    if (
-        permission === "granted"
-    ) {
-
-        state.selectedFolder =
-            savedFolder;
-
-        state.folderStructure =
-            await getFolderContent(
-                savedFolder
-            );
-
-        renderExplorer();
-
-    }
-
-}
-    document
-    .getElementById(
-        "new-file-button"
-    )
-    .addEventListener(
-        "click",
-        createFile
-    );
-
-document
-    .getElementById(
-        "new-folder-button"
-    )
-    .addEventListener(
-        "click",
-        createFolder
-    );
-
-
-    await loadModels();
-
-    initializeChat();
-
-    initializeExplorerActions();
-
-    const savedModel =
-        sessionStorage.getItem(
-            "currentModel"
-        );
-
-    if (savedModel) {
-
-        state.currentModel =
-            savedModel;
-
-    }
-
-    const openFolderButton =
-        document.getElementById(
-            "open-folder-button"
-        );
-
-    openFolderButton.addEventListener(
-        "click",
-        selectFolder
-    );
-
-    const saveButton =
-        document.getElementById(
-            "save-button"
-        );
-
-    saveButton.addEventListener(
-        "click",
-        saveFile
-    );
-
-    document.addEventListener(
-        "keydown",
-        async (event) => {
+        if (
+            savedFolder
+        ) {
+            const permission =
+                await savedFolder.queryPermission({
+                    mode: "readwrite"
+                });
 
             if (
-                event.ctrlKey &&
-                event.key.toLowerCase() === "s"
+                permission === "granted"
             ) {
+                state.selectedFolder =
+                    savedFolder;
 
-                event.preventDefault();
+                const savedPath = localStorage.getItem("projectPath");
+                if (savedPath) {
+                    state.projectPath = savedPath;
+                    await window.terminal.changeDirectory(state.projectPath);
+                    updateGitStatus();
+                }
 
-                await saveFile();
+                state.folderStructure =
+                    await getFolderContent(
+                        savedFolder
+                    );
 
+                renderExplorer();
             }
-
         }
-    );
 
+        document
+            .getElementById(
+                "new-file-button"
+            )
+            .addEventListener(
+                "click",
+                createFile
+            );
+
+        document
+            .getElementById(
+                "new-folder-button"
+            )
+            .addEventListener(
+                "click",
+                createFolder
+            );
+
+        await loadModels();
+
+        initializeChat();
+
+        initializeExplorerActions();
+
+        const savedModel =
+            sessionStorage.getItem(
+                "currentModel"
+            );
+
+        if (savedModel) {
+            state.currentModel =
+                savedModel;
+        }
+
+        const openFolderButton =
+            document.getElementById(
+                "open-folder-button"
+            );
+
+        openFolderButton.addEventListener(
+            "click",
+            selectFolder
+        );
+
+        const saveButton =
+            document.getElementById(
+                "save-button"
+            );
+
+        saveButton.addEventListener(
+            "click",
+            saveFile
+        );
+
+        document.addEventListener(
+            "keydown",
+            async (event) => {
+                if (
+                    event.ctrlKey &&
+                    event.key.toLowerCase() === "s"
+                ) {
+                    event.preventDefault();
+                    await saveFile();
+                }
+            }
+        );
+
+        startGitStatusPoller();
+    } catch (error) {
+        console.error("Initialization Error in initializeApp:", error);
+        console.error(error.stack);
+        throw error;
+    }
 }
 
 initializeApp();

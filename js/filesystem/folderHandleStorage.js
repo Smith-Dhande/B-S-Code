@@ -2,61 +2,74 @@ async function saveFolderHandle(
     folderHandle
 ) {
 
-    const database =
-        await openDatabase();
+    try {
+        const database =
+            await openDatabase();
 
-    const transaction =
-        database.transaction(
-            "handles",
-            "readwrite"
+        const transaction =
+            database.transaction(
+                "handles",
+                "readwrite"
+            );
+
+        const store =
+            transaction.objectStore(
+                "handles"
+            );
+
+        await store.put(
+            folderHandle,
+            "projectFolder"
         );
-
-    const store =
-        transaction.objectStore(
-            "handles"
-        );
-
-    await store.put(
-        folderHandle,
-        "projectFolder"
-    );
+    } catch (error) {
+        console.error("Failed to save folder handle to IndexedDB:", error);
+    }
 
 }
 
 async function loadFolderHandle() {
 
-    const database =
-        await openDatabase();
+    try {
+        const database =
+            await openDatabase();
 
-    const transaction =
-        database.transaction(
-            "handles",
-            "readonly"
-        );
+        const transaction =
+            database.transaction(
+                "handles",
+                "readonly"
+            );
 
-    const store =
-        transaction.objectStore(
-            "handles"
-        );
+        const store =
+            transaction.objectStore(
+                "handles"
+            );
 
-    return await new Promise(
-        (
-            resolve
-        ) => {
+        return await new Promise(
+            (
+                resolve
+            ) => {
 
-            const request =
-                store.get(
-                    "projectFolder"
-                );
-
-            request.onsuccess =
-                () =>
-                    resolve(
-                        request.result
+                const request =
+                    store.get(
+                        "projectFolder"
                     );
 
-        }
-    );
+                request.onsuccess =
+                    () =>
+                        resolve(
+                            request.result
+                        );
+
+                request.onerror =
+                    () =>
+                        resolve(null);
+
+            }
+        );
+    } catch (error) {
+        console.error("Failed to load folder handle from IndexedDB:", error);
+        return null;
+    }
 
 }
 

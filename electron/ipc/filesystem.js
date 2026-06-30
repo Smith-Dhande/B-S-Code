@@ -20,7 +20,13 @@ function registerFilesystemIPC() {
 
         async () => {
 
-            return await openFolder();
+            try {
+                return await openFolder();
+            } catch (error) {
+                console.error("IPC filesystem:openFolder Error in main process:", error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 
@@ -38,11 +44,17 @@ function registerFilesystemIPC() {
 
         ) => {
 
-            return await readDirectory(
+            try {
+                return await readDirectory(
 
-                directoryPath
+                    directoryPath
 
-            );
+                );
+            } catch (error) {
+                console.error(`IPC filesystem:readDirectory Error in main process for path ${directoryPath}:`, error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 

@@ -113,6 +113,23 @@ contextBridge.exposeInMainWorld(
 
             );
 
+        },
+
+        commit(
+            projectPath,
+            message
+        ) {
+
+            return ipcRenderer.invoke(
+
+                "git:commit",
+
+                projectPath,
+
+                message
+
+            );
+
         }
 
     }

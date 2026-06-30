@@ -10,7 +10,9 @@ const {
 
     getCurrentBranch,
 
-    getGitStatus
+    getGitStatus,
+
+    commit
 
 } = require(
     "../services/git"
@@ -30,11 +32,17 @@ function registerGitIPC() {
 
         ) => {
 
-            return await isGitRepository(
+            try {
+                return await isGitRepository(
 
-                projectPath
+                    projectPath
 
-            );
+                );
+            } catch (error) {
+                console.error("IPC git:isRepository Error in main process:", error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 
@@ -52,11 +60,17 @@ function registerGitIPC() {
 
         ) => {
 
-            return await getCurrentBranch(
+            try {
+                return await getCurrentBranch(
 
-                projectPath
+                    projectPath
 
-            );
+                );
+            } catch (error) {
+                console.error("IPC git:getBranch Error in main process:", error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 
@@ -74,11 +88,49 @@ function registerGitIPC() {
 
         ) => {
 
-            return await getGitStatus(
+            try {
+                return await getGitStatus(
 
-                projectPath
+                    projectPath
 
-            );
+                );
+            } catch (error) {
+                console.error("IPC git:getStatus Error in main process:", error);
+                console.error(error.stack);
+                throw error;
+            }
+
+        }
+
+    );
+
+    ipcMain.handle(
+
+        "git:commit",
+
+        async (
+
+            event,
+
+            projectPath,
+
+            message
+
+        ) => {
+
+            try {
+                return await commit(
+
+                    projectPath,
+
+                    message
+
+                );
+            } catch (error) {
+                console.error("IPC git:commit Error in main process:", error);
+                console.error(error.stack);
+                throw error;
+            }
 
         }
 

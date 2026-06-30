@@ -15,6 +15,9 @@ const state = {
     isModified: false,
     modifiedFiles: [],
     isCreatingFile: false,
-    isCreatingFolder: false
+    isCreatingFolder: false,
+    gitBranch: null,
+    gitRepository: false,
+    gitStatus: []
 };
 export { state };

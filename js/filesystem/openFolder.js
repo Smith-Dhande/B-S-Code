@@ -6,42 +6,78 @@ import { updateUI } from "../ui/updateUI.js";
 
 import { saveFolderHandle }from "./folderHandleStorage.js";
 
+import { updateGitStatus } from "../git/gitStatus.js";
+
 async function selectFolder() {
+    let selectedOpenFolder;
+    try {
+        selectedOpenFolder = await window.showDirectoryPicker();
+        await selectedOpenFolder.requestPermission({
+            mode: "readwrite"
+        });
+    } catch (pickerError) {
+        console.log("Directory picker canceled or permission denied:", pickerError);
+        return;
+    }
 
-    const selectedOpenFolder =
-        await window.showDirectoryPicker();
+    try {
+        const project =
+            await window.filesystem.openFolder();
 
-    await selectedOpenFolder.requestPermission({
-        mode: "readwrite"
-    });
+        if (
+            !project
+        ) {
+            return;
+        }
 
-    state.selectedFolder =
-        selectedOpenFolder;
-    await saveFolderHandle(
-    selectedOpenFolder
-);
-    const expandedFolders =
-    getExpandedFolders(
-        state.folderStructure
-    );
+        state.projectPath =
+            project.path;
 
-state.folderStructure =
-    await getFolderContent(
-        state.selectedFolder,
-        "",
-        expandedFolders
-    );
+        localStorage.setItem("projectPath", state.projectPath);
 
-    sessionStorage.setItem(
-        "projectName",
-        selectedOpenFolder.name
-    );
+        await window.terminal.changeDirectory(
+            state.projectPath
+        );
 
-    updateUI();
+        console.log(
+            "Project Path :",
+            state.projectPath
+        );
 
-    renderExplorer();
-    console.log(state.folderStructure);
+        await updateGitStatus();
 
+        state.selectedFolder =
+            selectedOpenFolder;
+
+        await saveFolderHandle(
+            selectedOpenFolder
+        );
+
+        const expandedFolders =
+            getExpandedFolders(
+                state.folderStructure
+            );
+
+        state.folderStructure =
+            await getFolderContent(
+                state.selectedFolder,
+                "",
+                expandedFolders
+            );
+
+        sessionStorage.setItem(
+            "projectName",
+            selectedOpenFolder.name
+        );
+
+        updateUI();
+
+        renderExplorer();
+    } catch (error) {
+        console.error("Open Folder Error in selectFolder:", error);
+        console.error(error.stack);
+        throw error;
+    }
 }
 
 function getExpandedFolders(
