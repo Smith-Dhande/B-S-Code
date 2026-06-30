@@ -142,6 +142,10 @@ contextBridge.exposeInMainWorld(
 
         commitSelected(projectPath, message, files) {
             return ipcRenderer.invoke("git:commitSelected", projectPath, message, files);
+        },
+
+        checkGitInstalled() {
+            return ipcRenderer.invoke("git:checkInstalled");
         }
 
     }

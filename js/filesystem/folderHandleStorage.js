@@ -115,5 +115,6 @@ function openDatabase() {
 
 export {
     saveFolderHandle,
-    loadFolderHandle
+    loadFolderHandle,
+    openDatabase
 };

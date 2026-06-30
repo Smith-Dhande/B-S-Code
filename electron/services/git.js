@@ -149,6 +149,15 @@ async function commitSelected(projectPath, message, files) {
     );
 }
 
+async function checkGitInstalled() {
+    try {
+        await executeGitCommand("git --version", process.cwd());
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 module.exports = {
 
     isGitRepository,
@@ -163,6 +172,8 @@ module.exports = {
 
     clone,
 
-    commitSelected
+    commitSelected,
+
+    checkGitInstalled
 
 };

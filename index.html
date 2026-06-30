@@ -109,9 +109,14 @@
             </button>
             <div class="activity-spacer"></div>
 
-            
-
-            
+            <button
+                id="settings-btn"
+                class="activity-button"
+                title="Settings"
+                style="margin-top: auto; margin-bottom: 12px;"
+            >
+                <i class="fa-solid fa-gear"></i>
+            </button>
 
         </aside>
 
@@ -254,6 +259,7 @@
                         class="main-editor-container"
                     >
 
+                        <div id="welcome-screen" class="welcome-screen" hidden></div>
                         <div
                             id="editor"
                         ></div>
@@ -358,6 +364,17 @@
                 </aside>
             </div>
         </main>
+        <div id="settings-dropdown" class="settings-dropdown" hidden>
+            <div class="settings-item" id="set-show-welcome">
+                <i></i> Show Welcome on Startup
+            </div>
+            <div class="settings-item" id="set-open-welcome">
+                <i class="fa-solid fa-circle-info"></i> Show Welcome Screen Now
+            </div>
+            <div class="settings-item" id="set-clear-recent">
+                <i class="fa-solid fa-trash-can"></i> Clear Recent Projects
+            </div>
+        </div>
         <div id="notifications-container">
         </div>
         <div id="modal-container"></div>

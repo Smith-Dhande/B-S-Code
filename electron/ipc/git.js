@@ -18,7 +18,9 @@ const {
 
     clone,
 
-    commitSelected
+    commitSelected,
+
+    checkGitInstalled
 
 } = require(
     "../services/git"
@@ -174,6 +176,17 @@ function registerGitIPC() {
             } catch (error) {
                 console.error("IPC git:commitSelected Error:", error);
                 throw error;
+            }
+        }
+    );
+    ipcMain.handle(
+        "git:checkInstalled",
+        async (event) => {
+            try {
+                return await checkGitInstalled();
+            } catch (error) {
+                console.error("IPC git:checkInstalled Error:", error);
+                return false;
             }
         }
     );

@@ -53,6 +53,13 @@ async function selectFolder() {
             selectedOpenFolder
         );
 
+        try {
+            const { addRecentProject } = await import("../welcome/recentProjects.js");
+            await addRecentProject(selectedOpenFolder.name, state.projectPath, selectedOpenFolder);
+        } catch (recentErr) {
+            console.error("Failed to add to recent list in openFolder:", recentErr);
+        }
+
         const expandedFolders =
             getExpandedFolders(
                 state.folderStructure
@@ -73,6 +80,13 @@ async function selectFolder() {
         updateUI();
 
         renderExplorer();
+
+        try {
+            const { hideWelcomeScreen } = await import("../welcome/welcome.js");
+            hideWelcomeScreen();
+        } catch (welcomeErr) {
+            console.error("Failed to hide welcome screen:", welcomeErr);
+        }
     } catch (error) {
         console.error("Open Folder Error in selectFolder:", error);
         console.error(error.stack);

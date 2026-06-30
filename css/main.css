@@ -1388,3 +1388,516 @@ font-family:
     margin-right: 4px;
     flex-shrink: 0;
 }
+
+/* ==========================================================================
+   Welcome Screen Styles
+   ========================================================================== */
+
+.welcome-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.welcome-screen[hidden] {
+    display: none !important;
+}
+
+.welcome-container {
+    max-width: 900px;
+    width: 100%;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.welcome-main {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.welcome-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 24px;
+}
+
+.welcome-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+}
+
+.welcome-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.welcome-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 600px;
+}
+
+.welcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.welcome-column {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.welcome-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: 0.25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.welcome-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.welcome-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    transition: background 0.2s, border-color 0.2s;
+    width: 100%;
+}
+
+.welcome-btn:hover {
+    background: var(--hover-color);
+    border-color: var(--accent-color);
+}
+
+.welcome-btn i {
+    font-size: 16px;
+    color: var(--accent-color);
+    width: 20px;
+    text-align: center;
+}
+
+/* Recent Projects List */
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.recent-empty {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px dashed var(--border-color);
+}
+
+.recent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+}
+
+.recent-item:hover {
+    background: var(--hover-color);
+    border-color: var(--accent-color);
+}
+
+.recent-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.recent-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recent-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-git-icon {
+    font-size: 14px;
+    color: #f05032; /* Git orange */
+}
+
+.recent-path {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.recent-time {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.recent-remove-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    margin-left: 10px;
+}
+
+.recent-remove-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ef4444; /* red */
+}
+
+/* Environment Check */
+.env-check-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.env-check-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.env-check-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.env-check-item:first-child {
+    padding-top: 0;
+}
+
+.env-info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.env-status-icon {
+    font-size: 16px;
+}
+
+.env-status-icon.success {
+    color: #22c55e; /* Green */
+}
+
+.env-status-icon.error {
+    color: #ef4444; /* Red */
+}
+
+.env-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.env-action-btn {
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.env-action-btn:hover {
+    opacity: 0.9;
+}
+
+/* Productivity Tip */
+.tip-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.tip-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.tip-icon {
+    font-size: 20px;
+    color: #eab308; /* Amber yellow */
+    margin-top: 2px;
+}
+
+.tip-content p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Quick Start Cards */
+.welcome-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.welcome-footer h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: 0.25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.quick-start-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.quick-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quick-card:hover {
+    background: var(--hover-color);
+    border-color: var(--accent-color);
+}
+
+.quick-card i {
+    font-size: 20px;
+    color: var(--accent-color);
+    margin-bottom: 4px;
+}
+
+.quick-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.quick-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Welcome Loading State */
+.welcome-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 24px;
+}
+
+/* Settings Cog Dropdown */
+.settings-dropdown {
+    position: absolute;
+    bottom: 50px;
+    left: 55px;
+    background: var(--bg-tertiary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    padding: 6px 0;
+    z-index: 99999 !important;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto !important;
+}
+
+.settings-dropdown[hidden] {
+    display: none !important;
+}
+
+.settings-item {
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s, color 0.2s;
+    pointer-events: auto !important;
+}
+
+.settings-item:hover {
+    background: var(--hover-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.settings-item i {
+    width: 14px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Modals for Shortcuts */
+.welcome-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
+
+.welcome-modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.welcome-modal-header h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.modal-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: var(--text-primary);
+}
+
+.welcome-modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.shortcut-row kbd {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--text-primary);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}

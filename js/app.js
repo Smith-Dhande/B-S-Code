@@ -36,7 +36,7 @@ import { renderTabs } from "./tabs/renderTabs.js";
 
 import { initializeTerminal } from "./terminal/terminal.js";
 
-import { updateGitStatus, startGitStatusPoller } from "./git/gitStatus.js";
+import { updateGitStatus , startGitStatusPoller } from "./git/gitStatus.js";
 
 window.resolvePath = resolvePath;
 window.state = state;
@@ -121,6 +121,8 @@ async function initializeApp() {
         const savedFolder =
             await loadFolderHandle();
 
+        let folderOpened = false;
+
         if (
             savedFolder
         ) {
@@ -140,6 +142,13 @@ async function initializeApp() {
                     state.projectPath = savedPath;
                     await window.terminal.changeDirectory(state.projectPath);
                     updateGitStatus();
+
+                    try {
+                        const { addRecentProject } = await import("./welcome/recentProjects.js");
+                        await addRecentProject(savedFolder.name, state.projectPath, savedFolder);
+                    } catch (recentErr) {
+                        console.error("Failed to add workspace to recent projects:", recentErr);
+                    }
                 }
 
                 state.folderStructure =
@@ -148,7 +157,30 @@ async function initializeApp() {
                     );
 
                 renderExplorer();
+                folderOpened = true;
             }
+        }
+
+        if (!folderOpened) {
+            try {
+                const { isFirstRun } = await import("./welcome/firstRun.js");
+                const firstLaunch = isFirstRun();
+                const showWelcomeOnStartup = localStorage.getItem("show_welcome_on_startup") !== "false";
+                
+                if (firstLaunch || showWelcomeOnStartup) {
+                    const { showWelcomeScreen } = await import("./welcome/welcome.js");
+                    showWelcomeScreen();
+                }
+            } catch (welcomeErr) {
+                console.error("Failed to initialize welcome screen:", welcomeErr);
+            }
+        }
+
+        try {
+            const { initializeSettings } = await import("./welcome/firstRun.js");
+            initializeSettings();
+        } catch (settingsErr) {
+            console.error("Failed to initialize settings cog menu:", settingsErr);
         }
 
         document
