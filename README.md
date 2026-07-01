@@ -227,6 +227,7 @@ Main Process
       │
       ▼
 Native APIs
+
 ```
 
 ### Layer Responsibilities
@@ -242,6 +243,7 @@ Native APIs
 | **Native APIs** | Filesystem, Git, Terminal, Child Processes, Secure Storage, and OS integrations. |
 
 </div >
+
 ---
 
 # 📂 Hybrid Filesystem Architecture
